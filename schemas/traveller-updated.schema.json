@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/traveller-updated.schema.json",
+  "title": "TravellerUpdated Event",
+  "description": "Published when an existing traveller record is modified by the Traveller Management bounded context",
+  "allOf": [{ "$ref": "envelope.schema.json" }],
+  "properties": {
+    "eventType": {
+      "const": "TravellerUpdated"
+    },
+    "payload": {
+      "$ref": "#/definitions/TravellerPayload"
+    }
+  },
+  "definitions": {
+    "TravellerPayload": {
+      "type": "object",
+      "description": "Traveller data payload for TravellerUpdated events",
+      "required": ["travellerId", "email", "firstName", "lastName", "corporateId", "status"],
+      "properties": {
+        "travellerId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique traveller identifier"
+        },
+        "employeeNumber": {
+          "type": ["string", "null"],
+          "description": "Corporate employee reference (null if not available)"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Traveller email address"
+        },
+        "firstName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Traveller first name"
+        },
+        "lastName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Traveller last name"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Corporate organisation the traveller belongs to"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "inactive"],
+          "description": "Traveller status"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

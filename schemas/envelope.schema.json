@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/envelope.schema.json",
+  "title": "HCI Event Envelope",
+  "description": "Standard envelope wrapping all domain events on the hci-domain-events EventBridge bus",
+  "type": "object",
+  "required": [
+    "eventId",
+    "eventType",
+    "schemaVersion",
+    "tenantId",
+    "corporateId",
+    "sourceService",
+    "timestamp",
+    "correlationId",
+    "payload"
+  ],
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this event instance"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "TravellerCreated",
+        "TravellerUpdated",
+        "PNRCreated",
+        "PNRUpdated",
+        "TripCreated",
+        "TripUpdated",
+        "SegmentAdded",
+        "SegmentUpdated",
+        "SegmentRemoved"
+      ],
+      "description": "Domain event type"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "Schema version number"
+    },
+    "tenantId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "TMC or Corporate tenant identifier"
+    },
+    "corporateId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Corporate organisation identifier"
+    },
+    "sourceService": {
+      "type": "string",
+      "pattern": "^hci\\\\.[a-z]+$",
+      "description": "Dot-notation service identifier"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event creation time in UTC (ISO-8601)"
+    },
+    "correlationId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Traces back to the originating action"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-type-specific payload"
+    }
+  },
+  "additionalProperties": false
+}

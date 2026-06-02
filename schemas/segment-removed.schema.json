@@ -1,0 +1,234 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/segment-removed.schema.json",
+  "title": "SegmentRemoved Event",
+  "description": "Published when a segment is removed from a trip by the Segment Management bounded context",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "SegmentRemoved"
+    },
+    "payload": {
+      "$ref": "#/definitions/SegmentPayload"
+    }
+  },
+  "definitions": {
+    "FlightSpecificData": {
+      "type": "object",
+      "required": ["flightNumber", "airline", "cabinClass", "bookingClass"],
+      "properties": {
+        "flightNumber": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Flight number (e.g., BA123)"
+        },
+        "airline": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Airline name or IATA code"
+        },
+        "cabinClass": {
+          "type": "string",
+          "enum": ["economy", "premium_economy", "business", "first"],
+          "description": "Cabin class"
+        },
+        "bookingClass": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Booking class code"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RailSpecificData": {
+      "type": "object",
+      "required": ["trainNumber", "operator", "seatClass", "stationCodes"],
+      "properties": {
+        "trainNumber": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Train service number"
+        },
+        "operator": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Rail operator name"
+        },
+        "seatClass": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Seat/travel class"
+        },
+        "stationCodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2,
+          "description": "Station codes for the journey"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CarSpecificData": {
+      "type": "object",
+      "required": ["pickupLocation", "dropoffLocation", "rentalCompany", "vehicleClass"],
+      "properties": {
+        "pickupLocation": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Car pickup location"
+        },
+        "dropoffLocation": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Car drop-off location"
+        },
+        "rentalCompany": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Rental company name"
+        },
+        "vehicleClass": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Vehicle class (e.g., compact, SUV)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "HotelSpecificData": {
+      "type": "object",
+      "required": ["propertyName", "checkInDate", "checkOutDate", "roomNights", "city", "country"],
+      "properties": {
+        "propertyName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel property name"
+        },
+        "propertyCode": {
+          "type": ["string", "null"],
+          "description": "Hotel property code"
+        },
+        "chainCode": {
+          "type": ["string", "null"],
+          "description": "Hotel chain code"
+        },
+        "checkInDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Check-in date (ISO-8601)"
+        },
+        "checkOutDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Check-out date (ISO-8601)"
+        },
+        "roomNights": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of room nights"
+        },
+        "rateCode": {
+          "type": ["string", "null"],
+          "description": "Rate code applied"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel city"
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel country"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SegmentPayload": {
+      "type": "object",
+      "description": "Segment data payload for SegmentRemoved events",
+      "required": [
+        "segmentId",
+        "tripId",
+        "segmentType",
+        "departureDateTime",
+        "arrivalDateTime",
+        "origin",
+        "destination",
+        "status",
+        "typeSpecificData"
+      ],
+      "properties": {
+        "segmentId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique segment identifier"
+        },
+        "tripId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reference to the trip this segment belongs to"
+        },
+        "segmentType": {
+          "type": "string",
+          "enum": ["flight", "rail", "car", "hotel"],
+          "description": "Segment type discriminator"
+        },
+        "departureDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Departure/start date-time (ISO-8601 UTC)"
+        },
+        "arrivalDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Arrival/end date-time (ISO-8601 UTC)"
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Origin location"
+        },
+        "destination": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Destination location"
+        },
+        "supplierCode": {
+          "type": ["string", "null"],
+          "description": "Supplier/carrier code (null if not available)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["confirmed", "cancelled", "waitlisted"],
+          "description": "Booking status"
+        },
+        "typeSpecificData": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/FlightSpecificData"
+            },
+            {
+              "$ref": "#/definitions/RailSpecificData"
+            },
+            {
+              "$ref": "#/definitions/CarSpecificData"
+            },
+            {
+              "$ref": "#/definitions/HotelSpecificData"
+            }
+          ],
+          "description": "Type-dependent attributes based on segmentType"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

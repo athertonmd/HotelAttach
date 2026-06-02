@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/trip-updated.schema.json",
+  "title": "TripUpdated Event",
+  "description": "Published when a trip's status or attributes change in the Trip Management bounded context",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "TripUpdated"
+    },
+    "payload": {
+      "$ref": "#/definitions/TripPayload"
+    }
+  },
+  "definitions": {
+    "TripPayload": {
+      "type": "object",
+      "description": "Trip data payload for TripUpdated events",
+      "required": [
+        "tripId",
+        "travellerId",
+        "status",
+        "departureDate",
+        "origin",
+        "destination",
+        "isInternational",
+        "segmentIds"
+      ],
+      "properties": {
+        "tripId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique trip identifier"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reference to the traveller taking this trip"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["created", "active", "in_progress", "completed", "archived"],
+          "description": "Trip lifecycle state"
+        },
+        "departureDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Departure date/time (ISO-8601 UTC)"
+        },
+        "returnDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Return date/time (ISO-8601 UTC), null for one-way trips"
+        },
+        "origin": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Origin location (IATA code or city name)"
+        },
+        "destination": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Destination location (IATA code or city name)"
+        },
+        "isInternational": {
+          "type": "boolean",
+          "description": "Whether the trip crosses international borders"
+        },
+        "segmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "description": "References to all segments in this trip"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

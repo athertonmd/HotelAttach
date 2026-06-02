@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/pnr-created.schema.json",
+  "title": "PNRCreated Event",
+  "description": "Published when a new PNR is successfully processed by the PNR Ingestion bounded context",
+  "allOf": [{ "$ref": "envelope.schema.json" }],
+  "properties": {
+    "eventType": {
+      "const": "PNRCreated"
+    },
+    "payload": {
+      "$ref": "#/definitions/PNRPayload"
+    }
+  },
+  "definitions": {
+    "PNRPayload": {
+      "type": "object",
+      "description": "PNR data payload for PNRCreated events",
+      "required": [
+        "pnrId",
+        "recordLocator",
+        "travellerId",
+        "tripId",
+        "gdsSource",
+        "createdAt",
+        "segmentCount",
+        "rawPnrRef"
+      ],
+      "properties": {
+        "pnrId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique PNR identifier"
+        },
+        "recordLocator": {
+          "type": "string",
+          "minLength": 1,
+          "description": "GDS record locator (e.g., ABC123)"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reference to the traveller this PNR belongs to"
+        },
+        "tripId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reference to the trip created from this PNR"
+        },
+        "gdsSource": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Source GDS system identifier (e.g., Amadeus, Sabre, Travelport)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "PNR creation timestamp (ISO-8601 UTC)"
+        },
+        "segmentCount": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of segments contained in this PNR"
+        },
+        "rawPnrRef": {
+          "type": "string",
+          "pattern": "^s3://",
+          "description": "S3 URI pointing to the raw PNR archive"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

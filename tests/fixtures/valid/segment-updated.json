@@ -1,0 +1,27 @@
+{
+  "eventId": "a7b8c9d0-e1f2-3456-abcd-567890123456",
+  "eventType": "SegmentUpdated",
+  "schemaVersion": 1,
+  "tenantId": "11111111-1111-1111-1111-111111111111",
+  "corporateId": "22222222-2222-2222-2222-222222222222",
+  "sourceService": "hci\\.itinerary",
+  "timestamp": "2026-06-05T09:00:00.000Z",
+  "correlationId": "33333333-3333-3333-3333-333333333333",
+  "payload": {
+    "segmentId": "77777777-7777-7777-7777-777777777777",
+    "tripId": "66666666-6666-6666-6666-666666666666",
+    "segmentType": "flight",
+    "departureDateTime": "2026-06-15T09:00:00.000Z",
+    "arrivalDateTime": "2026-06-15T12:30:00.000Z",
+    "origin": "LHR",
+    "destination": "JFK",
+    "supplierCode": "BA",
+    "status": "confirmed",
+    "typeSpecificData": {
+      "flightNumber": "BA117",
+      "airline": "British Airways",
+      "cabinClass": "business",
+      "bookingClass": "J"
+    }
+  }
+}

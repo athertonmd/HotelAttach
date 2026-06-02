@@ -1,0 +1,17 @@
+{
+  "name": "@hci/contract-tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Contract tests validating event schemas",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@hci/validation": "workspace:*",
+    "@hci/event-contracts": "workspace:*",
+    "vitest": "^3.0.0",
+    "typescript": "^5.7.0"
+  }
+}
