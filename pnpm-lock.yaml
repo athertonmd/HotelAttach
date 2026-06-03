@@ -98,6 +98,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/shared-types
     devDependencies:
+      '@hci/validation':
+        specifier: workspace:*
+        version: link:../../packages/validation
       '@types/node':
         specifier: ^22.0.0
         version: 22.19.19
