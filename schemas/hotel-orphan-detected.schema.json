@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/hotel-orphan-detected.schema.json",
+  "title": "HotelOrphanDetected Event",
+  "description": "Published when a hotel booking cannot be attached to any known trip and enters orphan state",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "HotelOrphanDetected"
+    },
+    "payload": {
+      "$ref": "#/definitions/OrphanPayload"
+    }
+  },
+  "definitions": {
+    "OrphanPayload": {
+      "type": "object",
+      "required": [
+        "bookingId",
+        "travellerId",
+        "tenantId",
+        "hotelName",
+        "city",
+        "country",
+        "checkinDate",
+        "checkoutDate",
+        "detectedAt",
+        "reassociationDeadline"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "hotelName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkinDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checkoutDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reassociationDeadline": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "roomNights": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "hotelChain": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

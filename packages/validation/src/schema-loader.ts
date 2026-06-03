@@ -22,6 +22,13 @@ export const SCHEMA_FILES = {
   'segment-removed': 'segment-removed.schema.json',
   'traveller-created': 'traveller-created.schema.json',
   'traveller-updated': 'traveller-updated.schema.json',
+  'booking-created': 'booking-created.schema.json',
+  'booking-updated': 'booking-updated.schema.json',
+  'booking-cancelled': 'booking-cancelled.schema.json',
+  'hotel-matched': 'hotel-matched.schema.json',
+  'hotel-rejected': 'hotel-rejected.schema.json',
+  'hotel-coverage-updated': 'hotel-coverage-updated.schema.json',
+  'hotel-orphan-detected': 'hotel-orphan-detected.schema.json',
 } as const;
 
 export type SchemaName = keyof typeof SCHEMA_FILES;

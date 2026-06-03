@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/hotel-coverage-updated.schema.json",
+  "title": "HotelCoverageUpdated Event",
+  "description": "Published when accommodation coverage for a trip changes",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "HotelCoverageUpdated"
+    },
+    "payload": {
+      "$ref": "#/definitions/CoveragePayload"
+    }
+  },
+  "definitions": {
+    "CoveragePayload": {
+      "type": "object",
+      "required": [
+        "tripId",
+        "tenantId",
+        "coveragePercent",
+        "coverageStatus",
+        "totalNightsRequired",
+        "nightsCovered",
+        "calculatedAt"
+      ],
+      "properties": {
+        "tripId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "coveragePercent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "coverageStatus": {
+          "type": "string",
+          "enum": [
+            "fully_covered",
+            "mostly_covered",
+            "partially_covered",
+            "minimally_covered",
+            "no_accommodation"
+          ]
+        },
+        "totalNightsRequired": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nightsCovered": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "calculatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "matchedBookingIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "previousCoveragePercent": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

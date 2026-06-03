@@ -32,6 +32,29 @@ export type {
   TravellerUpdatedEvent,
 } from './traveller-events.js';
 
+// Booking events (Project 2 input)
+export type {
+  BookingCreatedPayload,
+  BookingUpdatedPayload,
+  BookingCancelledPayload,
+  BookingCreatedEvent,
+  BookingUpdatedEvent,
+  BookingCancelledEvent,
+} from './booking-events.js';
+
+// Reconciliation events (Project 2 output)
+export type {
+  HotelMatchedPayload,
+  HotelRejectedPayload,
+  HotelCoverageUpdatedPayload,
+  HotelOrphanDetectedPayload,
+  CoverageStatus,
+  HotelMatchedEvent,
+  HotelRejectedEvent,
+  HotelCoverageUpdatedEvent,
+  HotelOrphanDetectedEvent,
+} from './reconciliation-events.js';
+
 // Envelope factory
 export {
   createEnvelope,

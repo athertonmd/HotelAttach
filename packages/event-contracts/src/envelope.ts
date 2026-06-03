@@ -15,7 +15,14 @@ export type EventType =
   | 'TripUpdated'
   | 'SegmentAdded'
   | 'SegmentUpdated'
-  | 'SegmentRemoved';
+  | 'SegmentRemoved'
+  | 'BookingCreated'
+  | 'BookingUpdated'
+  | 'BookingCancelled'
+  | 'HotelMatched'
+  | 'HotelRejected'
+  | 'HotelCoverageUpdated'
+  | 'HotelOrphanDetected';
 
 export interface HCIEventEnvelope<T extends object = object> {
   /** Unique identifier for this event instance (UUID v4) */

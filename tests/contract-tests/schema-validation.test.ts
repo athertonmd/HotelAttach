@@ -337,3 +337,114 @@ describe('Invalid Fixtures — Traveller Events', () => {
     expect(result.errors.some((e) => e.keyword === 'format')).toBe(true);
   });
 });
+
+// === Project 2 Schema Contract Tests ===
+
+describe('Valid Fixtures — Booking Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should validate a valid BookingCreated event', () => {
+    const data = loadFixture('valid', 'booking-created.json');
+    const result = validator.validateEvent('booking-created', data);
+    expect(result.valid).toBe(true);
+  });
+
+  it('should validate a valid BookingUpdated event', () => {
+    const data = loadFixture('valid', 'booking-updated.json');
+    const result = validator.validateEvent('booking-updated', data);
+    expect(result.valid).toBe(true);
+  });
+
+  it('should validate a valid BookingCancelled event', () => {
+    const data = loadFixture('valid', 'booking-cancelled.json');
+    const result = validator.validateEvent('booking-cancelled', data);
+    expect(result.valid).toBe(true);
+  });
+});
+
+describe('Valid Fixtures — Reconciliation Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should validate a valid HotelMatched event', () => {
+    const data = loadFixture('valid', 'hotel-matched.json');
+    const result = validator.validateEvent('hotel-matched', data);
+    expect(result.valid).toBe(true);
+  });
+
+  it('should validate a valid HotelRejected event', () => {
+    const data = loadFixture('valid', 'hotel-rejected.json');
+    const result = validator.validateEvent('hotel-rejected', data);
+    expect(result.valid).toBe(true);
+  });
+
+  it('should validate a valid HotelCoverageUpdated event', () => {
+    const data = loadFixture('valid', 'hotel-coverage-updated.json');
+    const result = validator.validateEvent('hotel-coverage-updated', data);
+    expect(result.valid).toBe(true);
+  });
+
+  it('should validate a valid HotelOrphanDetected event', () => {
+    const data = loadFixture('valid', 'hotel-orphan-detected.json');
+    const result = validator.validateEvent('hotel-orphan-detected', data);
+    expect(result.valid).toBe(true);
+  });
+});
+
+describe('Invalid Fixtures — Booking Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should reject BookingCreated missing bookingId', () => {
+    const data = loadFixture('invalid', 'booking-created-missing-bookingId.json');
+    const result = validator.validateEvent('booking-created', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
+  });
+
+  it('should reject BookingCreated with bookingVersion < 1', () => {
+    const data = loadFixture('invalid', 'booking-created-invalid-version.json');
+    const result = validator.validateEvent('booking-created', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'minimum')).toBe(true);
+  });
+});
+
+describe('Invalid Fixtures — Reconciliation Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should reject HotelMatched with empty reasonCodes', () => {
+    const data = loadFixture('invalid', 'hotel-matched-empty-reasons.json');
+    const result = validator.validateEvent('hotel-matched', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'minItems')).toBe(true);
+  });
+
+  it('should reject HotelMatched with confidence > 100', () => {
+    const data = loadFixture('invalid', 'hotel-matched-invalid-confidence.json');
+    const result = validator.validateEvent('hotel-matched', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'maximum')).toBe(true);
+  });
+
+  it('should reject HotelCoverageUpdated with invalid coverageStatus', () => {
+    const data = loadFixture('invalid', 'hotel-coverage-invalid-status.json');
+    const result = validator.validateEvent('hotel-coverage-updated', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+});

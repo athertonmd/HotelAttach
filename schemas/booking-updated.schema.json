@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/booking-updated.schema.json",
+  "title": "BookingUpdated Event",
+  "description": "Published when an existing hotel booking is modified by the PNR Ingestion bounded context",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BookingUpdated"
+    },
+    "payload": {
+      "$ref": "#/definitions/BookingPayload"
+    }
+  },
+  "definitions": {
+    "BookingPayload": {
+      "type": "object",
+      "required": [
+        "bookingId",
+        "travellerId",
+        "tenantId",
+        "hotelName",
+        "city",
+        "country",
+        "checkinDate",
+        "checkoutDate",
+        "bookingDate",
+        "roomNights",
+        "status",
+        "bookingVersion"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "hotelName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkinDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checkoutDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bookingDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "roomNights": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["confirmed", "waitlisted"]
+        },
+        "bookingVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "hotelChain": {
+          "type": ["string", "null"]
+        },
+        "confirmationNumber": {
+          "type": ["string", "null"]
+        },
+        "supplierCode": {
+          "type": ["string", "null"]
+        },
+        "employeeNumber": {
+          "type": ["string", "null"]
+        },
+        "email": {
+          "type": ["string", "null"],
+          "format": "email"
+        },
+        "sourceSegmentId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "previousCheckinDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Previous check-in for audit"
+        },
+        "previousCheckoutDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Previous check-out for audit"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

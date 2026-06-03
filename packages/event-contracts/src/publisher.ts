@@ -92,4 +92,11 @@ export const EVENT_TYPE_TO_SCHEMA: Record<EventType, string> = {
   SegmentRemoved: 'segment-removed',
   TravellerCreated: 'traveller-created',
   TravellerUpdated: 'traveller-updated',
+  BookingCreated: 'booking-created',
+  BookingUpdated: 'booking-updated',
+  BookingCancelled: 'booking-cancelled',
+  HotelMatched: 'hotel-matched',
+  HotelRejected: 'hotel-rejected',
+  HotelCoverageUpdated: 'hotel-coverage-updated',
+  HotelOrphanDetected: 'hotel-orphan-detected',
 };

@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/booking-cancelled.schema.json",
+  "title": "BookingCancelled Event",
+  "description": "Published when a hotel booking is cancelled",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BookingCancelled"
+    },
+    "payload": {
+      "$ref": "#/definitions/BookingCancelledPayload"
+    }
+  },
+  "definitions": {
+    "BookingCancelledPayload": {
+      "type": "object",
+      "required": ["bookingId", "travellerId", "tenantId", "cancelledAt"],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cancelledAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": ["string", "null"]
+        },
+        "hotelName": {
+          "type": ["string", "null"]
+        },
+        "city": {
+          "type": ["string", "null"]
+        },
+        "checkinDate": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "checkoutDate": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

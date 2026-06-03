@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/booking-created.schema.json",
+  "title": "BookingCreated Event",
+  "description": "Published when a hotel booking is detected in itinerary data by the PNR Ingestion bounded context",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BookingCreated"
+    },
+    "payload": {
+      "$ref": "#/definitions/BookingPayload"
+    }
+  },
+  "definitions": {
+    "BookingPayload": {
+      "type": "object",
+      "description": "Hotel booking data for BookingCreated events",
+      "required": [
+        "bookingId",
+        "travellerId",
+        "tenantId",
+        "hotelName",
+        "city",
+        "country",
+        "checkinDate",
+        "checkoutDate",
+        "bookingDate",
+        "roomNights",
+        "status",
+        "bookingVersion"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique hotel booking identifier"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Traveller this booking belongs to"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Tenant identifier for isolation"
+        },
+        "hotelName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel property name"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel city"
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Hotel country"
+        },
+        "checkinDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Check-in date (ISO-8601)"
+        },
+        "checkoutDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Check-out date (ISO-8601)"
+        },
+        "bookingDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the booking was made"
+        },
+        "roomNights": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of room nights"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["confirmed", "waitlisted"],
+          "description": "Booking status"
+        },
+        "bookingVersion": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version for out-of-order update handling"
+        },
+        "hotelChain": {
+          "type": ["string", "null"],
+          "description": "Hotel chain code"
+        },
+        "confirmationNumber": {
+          "type": ["string", "null"],
+          "description": "Supplier confirmation reference"
+        },
+        "supplierCode": {
+          "type": ["string", "null"],
+          "description": "Supplier identifier"
+        },
+        "employeeNumber": {
+          "type": ["string", "null"],
+          "description": "Employee number for matching (BR-202)"
+        },
+        "email": {
+          "type": ["string", "null"],
+          "format": "email",
+          "description": "Traveller email for matching (BR-203)"
+        },
+        "sourceSegmentId": {
+          "type": ["string", "null"],
+          "format": "uuid",
+          "description": "Link to originating hotel segment"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

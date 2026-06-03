@@ -15,6 +15,13 @@ export const EVENT_TYPES = {
   SegmentAdded: 'SegmentAdded',
   SegmentUpdated: 'SegmentUpdated',
   SegmentRemoved: 'SegmentRemoved',
+  BookingCreated: 'BookingCreated',
+  BookingUpdated: 'BookingUpdated',
+  BookingCancelled: 'BookingCancelled',
+  HotelMatched: 'HotelMatched',
+  HotelRejected: 'HotelRejected',
+  HotelCoverageUpdated: 'HotelCoverageUpdated',
+  HotelOrphanDetected: 'HotelOrphanDetected',
 } as const;
 
 export type EventTypeConstant = (typeof EVENT_TYPES)[keyof typeof EVENT_TYPES];

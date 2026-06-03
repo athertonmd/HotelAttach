@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/hotel-rejected.schema.json",
+  "title": "HotelRejected Event",
+  "description": "Published when a hotel booking cannot be matched to any trip",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "HotelRejected"
+    },
+    "payload": {
+      "$ref": "#/definitions/HotelRejectedPayload"
+    }
+  },
+  "definitions": {
+    "HotelRejectedPayload": {
+      "type": "object",
+      "required": [
+        "bookingId",
+        "travellerId",
+        "tenantId",
+        "reason",
+        "highestConfidence",
+        "evaluatedAt"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "highestConfidence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "evaluatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "candidateTripId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "candidateScore": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

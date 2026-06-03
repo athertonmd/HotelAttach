@@ -32,7 +32,14 @@
         "TripUpdated",
         "SegmentAdded",
         "SegmentUpdated",
-        "SegmentRemoved"
+        "SegmentRemoved",
+        "BookingCreated",
+        "BookingUpdated",
+        "BookingCancelled",
+        "HotelMatched",
+        "HotelRejected",
+        "HotelCoverageUpdated",
+        "HotelOrphanDetected"
       ],
       "description": "Domain event type"
     },
