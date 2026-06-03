@@ -29,6 +29,10 @@ export const SCHEMA_FILES = {
   'hotel-rejected': 'hotel-rejected.schema.json',
   'hotel-coverage-updated': 'hotel-coverage-updated.schema.json',
   'hotel-orphan-detected': 'hotel-orphan-detected.schema.json',
+  'opportunity-created': 'opportunity-created.schema.json',
+  'opportunity-updated': 'opportunity-updated.schema.json',
+  'opportunity-closed': 'opportunity-closed.schema.json',
+  'opportunity-rejected': 'opportunity-rejected.schema.json',
 } as const;
 
 export type SchemaName = keyof typeof SCHEMA_FILES;

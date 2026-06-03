@@ -22,7 +22,11 @@ export type EventType =
   | 'HotelMatched'
   | 'HotelRejected'
   | 'HotelCoverageUpdated'
-  | 'HotelOrphanDetected';
+  | 'HotelOrphanDetected'
+  | 'OpportunityCreated'
+  | 'OpportunityUpdated'
+  | 'OpportunityClosed'
+  | 'OpportunityRejected';
 
 export interface HCIEventEnvelope<T extends object = object> {
   /** Unique identifier for this event instance (UUID v4) */

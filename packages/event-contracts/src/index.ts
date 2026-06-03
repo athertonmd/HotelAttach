@@ -55,6 +55,27 @@ export type {
   HotelOrphanDetectedEvent,
 } from './reconciliation-events.js';
 
+// Opportunity events (Project 3 output)
+export type {
+  OpportunityType,
+  OpportunityLifecycleState,
+  OpportunityPriority,
+  OpportunityClosureReason,
+  OpportunityRejectionReason,
+  OpportunitySuppressionReason,
+  OpportunityActorType,
+  RecommendationType,
+  OpportunityRecommendation,
+  OpportunityCreatedPayload,
+  OpportunityUpdatedPayload,
+  OpportunityClosedPayload,
+  OpportunityRejectedPayload,
+  OpportunityCreatedEvent,
+  OpportunityUpdatedEvent,
+  OpportunityClosedEvent,
+  OpportunityRejectedEvent,
+} from './opportunity-events.js';
+
 // Envelope factory
 export {
   createEnvelope,

@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/opportunity-created.schema.json",
+  "title": "OpportunityCreated Event",
+  "description": "Published when a new opportunity is detected and qualified by the Opportunity Detection Engine",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "OpportunityCreated"
+    },
+    "payload": {
+      "$ref": "#/definitions/OpportunityCreatedPayload"
+    }
+  },
+  "definitions": {
+    "OpportunityCreatedPayload": {
+      "type": "object",
+      "required": [
+        "opportunityId",
+        "tenantId",
+        "corporateId",
+        "travellerId",
+        "tripId",
+        "opportunityType",
+        "lifecycleState",
+        "score",
+        "priority",
+        "detectedAt"
+      ],
+      "properties": {
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tripId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityType": {
+          "type": "string",
+          "enum": [
+            "missing_hotel",
+            "partial_coverage",
+            "out_of_policy",
+            "direct_booked",
+            "preferred_supplier",
+            "duty_of_care_gap",
+            "orphan_hotel_review"
+          ]
+        },
+        "lifecycleState": {
+          "type": "string",
+          "enum": ["qualified", "active", "suppressed", "awaiting_action"]
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "estimatedRoomNights": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "estimatedSpend": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "estimatedCommission": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "destinationCity": {
+          "type": ["string", "null"]
+        },
+        "destinationCountry": {
+          "type": ["string", "null"],
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "departureDate": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "suppressedUntil": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "primarySuppressionReason": {
+          "type": ["string", "null"],
+          "enum": [
+            "corporate_policy_override",
+            "manual_suppression",
+            "trip_cancellation_pending",
+            "orphan_reassociation_window",
+            "traveller_recently_declined",
+            "existing_booking_in_flight",
+            "duplicate_opportunity",
+            "existing_active_opportunity",
+            "communication_cooldown",
+            "executive_traveller_review",
+            "supplier_contract_exemption",
+            null
+          ]
+        },
+        "triggeringEventId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": ["string", "null"]
+        },
+        "ruleIdsApplied": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recommendation": {
+          "oneOf": [{ "$ref": "#/definitions/Recommendation" }, { "type": "null" }]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Recommendation": {
+      "type": "object",
+      "required": ["recommendationType", "recommendationText", "priority"],
+      "properties": {
+        "recommendationType": {
+          "type": "string",
+          "enum": [
+            "book_hotel",
+            "add_nights",
+            "move_to_preferred",
+            "review_policy_exception",
+            "contact_tmc",
+            "confirm_accommodation",
+            "cancel_external_booking"
+          ]
+        },
+        "recommendationText": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "preferredSupplierId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "estimatedNights": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "estimatedCost": {
+          "type": ["number", "null"],
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

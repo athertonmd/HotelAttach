@@ -46,6 +46,17 @@ describe('Schema Compilation', () => {
       'segment-removed',
       'traveller-created',
       'traveller-updated',
+      'booking-created',
+      'booking-updated',
+      'booking-cancelled',
+      'hotel-matched',
+      'hotel-rejected',
+      'hotel-coverage-updated',
+      'hotel-orphan-detected',
+      'opportunity-created',
+      'opportunity-updated',
+      'opportunity-closed',
+      'opportunity-rejected',
     ];
 
     for (const name of expectedSchemas) {
@@ -94,6 +105,17 @@ describe('Event Type Constants', () => {
       'segment-removed.schema.json': 'SegmentRemoved',
       'traveller-created.schema.json': 'TravellerCreated',
       'traveller-updated.schema.json': 'TravellerUpdated',
+      'booking-created.schema.json': 'BookingCreated',
+      'booking-updated.schema.json': 'BookingUpdated',
+      'booking-cancelled.schema.json': 'BookingCancelled',
+      'hotel-matched.schema.json': 'HotelMatched',
+      'hotel-rejected.schema.json': 'HotelRejected',
+      'hotel-coverage-updated.schema.json': 'HotelCoverageUpdated',
+      'hotel-orphan-detected.schema.json': 'HotelOrphanDetected',
+      'opportunity-created.schema.json': 'OpportunityCreated',
+      'opportunity-updated.schema.json': 'OpportunityUpdated',
+      'opportunity-closed.schema.json': 'OpportunityClosed',
+      'opportunity-rejected.schema.json': 'OpportunityRejected',
     };
 
     for (const [file, expectedType] of Object.entries(schemaToEventType)) {
@@ -446,5 +468,79 @@ describe('Invalid Fixtures — Reconciliation Events', () => {
     const result = validator.validateEvent('hotel-coverage-updated', data);
     expect(result.valid).toBe(false);
     expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+});
+
+// === Project 3 Schema Contract Tests ===
+
+describe('Valid Fixtures — Opportunity Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should validate a valid OpportunityCreated event', () => {
+    const data = loadFixture('valid', 'opportunity-created.json');
+    const result = validator.validateEvent('opportunity-created', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid OpportunityUpdated event', () => {
+    const data = loadFixture('valid', 'opportunity-updated.json');
+    const result = validator.validateEvent('opportunity-updated', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid OpportunityClosed event', () => {
+    const data = loadFixture('valid', 'opportunity-closed.json');
+    const result = validator.validateEvent('opportunity-closed', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid OpportunityRejected event', () => {
+    const data = loadFixture('valid', 'opportunity-rejected.json');
+    const result = validator.validateEvent('opportunity-rejected', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+});
+
+describe('Invalid Fixtures — Opportunity Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should reject OpportunityCreated with invalid opportunityType', () => {
+    const data = loadFixture('invalid', 'opportunity-created-invalid-type.json');
+    const result = validator.validateEvent('opportunity-created', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject OpportunityCreated with score > 100', () => {
+    const data = loadFixture('invalid', 'opportunity-created-score-over-100.json');
+    const result = validator.validateEvent('opportunity-created', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'maximum')).toBe(true);
+  });
+
+  it('should reject OpportunityClosed with invalid closureReason', () => {
+    const data = loadFixture('invalid', 'opportunity-closed-invalid-reason.json');
+    const result = validator.validateEvent('opportunity-closed', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject OpportunityRejected missing rejectionReason', () => {
+    const data = loadFixture('invalid', 'opportunity-rejected-missing-reason.json');
+    const result = validator.validateEvent('opportunity-rejected', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
   });
 });

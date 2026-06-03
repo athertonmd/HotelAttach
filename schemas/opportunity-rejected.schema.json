@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/opportunity-rejected.schema.json",
+  "title": "OpportunityRejected Event",
+  "description": "Published when an opportunity is rejected by traveller, agent, or policy",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "OpportunityRejected"
+    },
+    "payload": {
+      "$ref": "#/definitions/OpportunityRejectedPayload"
+    }
+  },
+  "definitions": {
+    "OpportunityRejectedPayload": {
+      "type": "object",
+      "required": [
+        "opportunityId",
+        "tenantId",
+        "corporateId",
+        "tripId",
+        "travellerId",
+        "opportunityType",
+        "rejectionReason",
+        "rejectedAt"
+      ],
+      "properties": {
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tripId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityType": {
+          "type": "string",
+          "enum": [
+            "missing_hotel",
+            "partial_coverage",
+            "out_of_policy",
+            "direct_booked",
+            "preferred_supplier",
+            "duty_of_care_gap",
+            "orphan_hotel_review"
+          ]
+        },
+        "rejectionReason": {
+          "type": "string",
+          "enum": [
+            "traveller_declined",
+            "admin_rejected",
+            "no_action_required",
+            "policy_exempted",
+            "duplicate_opportunity",
+            "supplier_exempted"
+          ]
+        },
+        "rejectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "actorId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "actorType": {
+          "type": ["string", "null"],
+          "enum": ["system", "tmc_user", "tmc_admin", "corporate_admin", "platform_admin", null]
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 1000
+        },
+        "previousState": {
+          "type": ["string", "null"],
+          "enum": [
+            "detected",
+            "qualified",
+            "suppressed",
+            "awaiting_action",
+            "active",
+            "communicated",
+            "converted",
+            "fulfilled",
+            null
+          ]
+        },
+        "finalScore": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "triggeringEventId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

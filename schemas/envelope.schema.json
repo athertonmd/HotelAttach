@@ -39,7 +39,11 @@
         "HotelMatched",
         "HotelRejected",
         "HotelCoverageUpdated",
-        "HotelOrphanDetected"
+        "HotelOrphanDetected",
+        "OpportunityCreated",
+        "OpportunityUpdated",
+        "OpportunityClosed",
+        "OpportunityRejected"
       ],
       "description": "Domain event type"
     },

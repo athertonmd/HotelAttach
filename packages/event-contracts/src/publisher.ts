@@ -99,4 +99,8 @@ export const EVENT_TYPE_TO_SCHEMA: Record<EventType, string> = {
   HotelRejected: 'hotel-rejected',
   HotelCoverageUpdated: 'hotel-coverage-updated',
   HotelOrphanDetected: 'hotel-orphan-detected',
+  OpportunityCreated: 'opportunity-created',
+  OpportunityUpdated: 'opportunity-updated',
+  OpportunityClosed: 'opportunity-closed',
+  OpportunityRejected: 'opportunity-rejected',
 };
