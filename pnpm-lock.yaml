@@ -111,6 +111,28 @@ importers:
         specifier: ^3.0.0
         version: 3.2.4(@types/node@22.19.19)
 
+  services/opportunity-detection:
+    dependencies:
+      '@hci/event-contracts':
+        specifier: workspace:*
+        version: link:../../packages/event-contracts
+      '@hci/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
+    devDependencies:
+      '@hci/validation':
+        specifier: workspace:*
+        version: link:../../packages/validation
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.19.19
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.0.0
+        version: 3.2.4(@types/node@22.19.19)
+
   services/pnr-ingestion:
     dependencies:
       '@hci/event-contracts':
