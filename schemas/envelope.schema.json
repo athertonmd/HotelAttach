@@ -43,7 +43,10 @@
         "OpportunityCreated",
         "OpportunityUpdated",
         "OpportunityClosed",
-        "OpportunityRejected"
+        "OpportunityRejected",
+        "CommunicationSent",
+        "TravellerResponded",
+        "BookingRequestCreated"
       ],
       "description": "Domain event type"
     },

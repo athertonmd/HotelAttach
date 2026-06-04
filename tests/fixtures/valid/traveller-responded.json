@@ -1,0 +1,25 @@
+{
+  "eventId": "bb222222-2222-4000-8000-222222222222",
+  "schemaVersion": 1,
+  "tenantId": "11111111-1111-1111-1111-111111111111",
+  "corporateId": "22222222-2222-2222-2222-222222222222",
+  "sourceService": "hci\\.engagement",
+  "timestamp": "2026-08-03T14:30:00.000Z",
+  "correlationId": "33333333-3333-3333-3333-333333333333",
+  "eventType": "TravellerResponded",
+  "payload": {
+    "responseId": "88888888-8888-8888-8888-888888888888",
+    "communicationId": "44444444-4444-4444-4444-444444444444",
+    "opportunityId": "55555555-5555-5555-5555-555555555555",
+    "tenantId": "11111111-1111-1111-1111-111111111111",
+    "corporateId": "22222222-2222-2222-2222-222222222222",
+    "travellerId": "66666666-6666-6666-6666-666666666666",
+    "responseType": "accepted",
+    "respondedAt": "2026-08-03T14:30:00.000Z",
+    "responseChannel": "portal",
+    "notes": "Please book near the conference venue",
+    "triggeringEventId": "44444444-4444-4444-4444-444444444444",
+    "triggeringEventType": "CommunicationSent",
+    "actionTokenId": "99999999-9999-9999-9999-999999999999"
+  }
+}

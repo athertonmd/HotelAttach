@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/booking-request-created.schema.json",
+  "title": "BookingRequestCreated Event",
+  "description": "Published when a traveller accepts a recommendation and a hotel booking request is created for TMC fulfilment",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BookingRequestCreated"
+    },
+    "payload": {
+      "$ref": "#/definitions/BookingRequestCreatedPayload"
+    }
+  },
+  "definitions": {
+    "BookingRequestCreatedPayload": {
+      "type": "object",
+      "description": "Payload for BookingRequestCreated events",
+      "required": [
+        "requestId",
+        "opportunityId",
+        "tenantId",
+        "corporateId",
+        "travellerId",
+        "tripId",
+        "requestStatus",
+        "requestedAt"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tripId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "requestStatus": {
+          "type": "string",
+          "enum": ["created"]
+        },
+        "requestedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "recommendationType": {
+          "type": ["string", "null"],
+          "enum": ["book_hotel", "add_nights", "move_to_preferred", "confirm_accommodation", null]
+        },
+        "destinationCity": {
+          "type": ["string", "null"]
+        },
+        "destinationCountry": {
+          "type": ["string", "null"],
+          "minLength": 2,
+          "maxLength": 2
+        },
+        "requestedNights": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "preferredSupplierId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "estimatedBudget": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "checkinDate": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "checkoutDate": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "specialRequests": {
+          "type": ["string", "null"],
+          "maxLength": 500
+        },
+        "triggeringEventId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": ["string", "null"]
+        },
+        "responseId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

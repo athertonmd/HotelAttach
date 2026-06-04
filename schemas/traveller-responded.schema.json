@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/traveller-responded.schema.json",
+  "title": "TravellerResponded Event",
+  "description": "Published when a traveller provides a response to a communication",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "TravellerResponded"
+    },
+    "payload": {
+      "$ref": "#/definitions/TravellerRespondedPayload"
+    }
+  },
+  "definitions": {
+    "TravellerRespondedPayload": {
+      "type": "object",
+      "description": "Payload for TravellerResponded events",
+      "required": [
+        "responseId",
+        "communicationId",
+        "opportunityId",
+        "tenantId",
+        "corporateId",
+        "travellerId",
+        "responseType",
+        "respondedAt"
+      ],
+      "properties": {
+        "responseId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "communicationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "responseType": {
+          "type": "string",
+          "enum": ["accepted", "declined", "confirmed_external", "provided_details"]
+        },
+        "respondedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "responseChannel": {
+          "type": ["string", "null"],
+          "enum": ["portal", "email_reply", "phone", "agent_recorded", null]
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "maxLength": 1000
+        },
+        "accommodationDetails": {
+          "type": ["string", "null"],
+          "maxLength": 500
+        },
+        "triggeringEventId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": ["string", "null"]
+        },
+        "actionTokenId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

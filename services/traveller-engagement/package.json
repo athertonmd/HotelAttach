@@ -1,0 +1,26 @@
+{
+  "name": "@hci/traveller-engagement",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Traveller Engagement Platform — domain model and logic",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ --ignore-pattern 'src/__tests__/'",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@hci/event-contracts": "workspace:*",
+    "@hci/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@hci/validation": "workspace:*",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

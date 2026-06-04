@@ -33,6 +33,9 @@ export const SCHEMA_FILES = {
   'opportunity-updated': 'opportunity-updated.schema.json',
   'opportunity-closed': 'opportunity-closed.schema.json',
   'opportunity-rejected': 'opportunity-rejected.schema.json',
+  'communication-sent': 'communication-sent.schema.json',
+  'traveller-responded': 'traveller-responded.schema.json',
+  'booking-request-created': 'booking-request-created.schema.json',
 } as const;
 
 export type SchemaName = keyof typeof SCHEMA_FILES;

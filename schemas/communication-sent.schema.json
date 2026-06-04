@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/communication-sent.schema.json",
+  "title": "CommunicationSent Event",
+  "description": "Published when a traveller communication has been sent or delivery has been attempted by the Traveller Engagement Platform",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "CommunicationSent"
+    },
+    "payload": {
+      "$ref": "#/definitions/CommunicationSentPayload"
+    }
+  },
+  "definitions": {
+    "CommunicationSentPayload": {
+      "type": "object",
+      "description": "Payload for CommunicationSent events",
+      "required": [
+        "communicationId",
+        "opportunityId",
+        "tenantId",
+        "corporateId",
+        "travellerId",
+        "communicationType",
+        "channel",
+        "sentAt"
+      ],
+      "properties": {
+        "communicationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "communicationType": {
+          "type": "string",
+          "enum": ["initial_contact", "reminder", "escalation", "follow_up"]
+        },
+        "channel": {
+          "type": "string",
+          "enum": ["email", "sms", "portal", "agent_call"]
+        },
+        "sentAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "templateId": {
+          "type": ["string", "null"],
+          "maxLength": 100
+        },
+        "deliveryStatus": {
+          "type": ["string", "null"],
+          "enum": ["delivered", "pending", "failed", null]
+        },
+        "triggeringEventId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": ["string", "null"]
+        },
+        "recommendationType": {
+          "type": ["string", "null"],
+          "enum": [
+            "book_hotel",
+            "add_nights",
+            "move_to_preferred",
+            "review_policy_exception",
+            "contact_tmc",
+            "confirm_accommodation",
+            "cancel_external_booking",
+            null
+          ]
+        },
+        "scheduledAt": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "retryCount": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

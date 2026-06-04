@@ -26,7 +26,10 @@ export type EventType =
   | 'OpportunityCreated'
   | 'OpportunityUpdated'
   | 'OpportunityClosed'
-  | 'OpportunityRejected';
+  | 'OpportunityRejected'
+  | 'CommunicationSent'
+  | 'TravellerResponded'
+  | 'BookingRequestCreated';
 
 export interface HCIEventEnvelope<T extends object = object> {
   /** Unique identifier for this event instance (UUID v4) */

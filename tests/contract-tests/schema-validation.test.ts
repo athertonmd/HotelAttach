@@ -57,6 +57,9 @@ describe('Schema Compilation', () => {
       'opportunity-updated',
       'opportunity-closed',
       'opportunity-rejected',
+      'communication-sent',
+      'traveller-responded',
+      'booking-request-created',
     ];
 
     for (const name of expectedSchemas) {
@@ -116,6 +119,9 @@ describe('Event Type Constants', () => {
       'opportunity-updated.schema.json': 'OpportunityUpdated',
       'opportunity-closed.schema.json': 'OpportunityClosed',
       'opportunity-rejected.schema.json': 'OpportunityRejected',
+      'communication-sent.schema.json': 'CommunicationSent',
+      'traveller-responded.schema.json': 'TravellerResponded',
+      'booking-request-created.schema.json': 'BookingRequestCreated',
     };
 
     for (const [file, expectedType] of Object.entries(schemaToEventType)) {
@@ -540,6 +546,66 @@ describe('Invalid Fixtures — Opportunity Events', () => {
   it('should reject OpportunityRejected missing rejectionReason', () => {
     const data = loadFixture('invalid', 'opportunity-rejected-missing-reason.json');
     const result = validator.validateEvent('opportunity-rejected', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
+  });
+});
+
+// === Project 4 Schema Contract Tests ===
+
+describe('Valid Fixtures — Engagement Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should validate a valid CommunicationSent event', () => {
+    const data = loadFixture('valid', 'communication-sent.json');
+    const result = validator.validateEvent('communication-sent', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid TravellerResponded event', () => {
+    const data = loadFixture('valid', 'traveller-responded.json');
+    const result = validator.validateEvent('traveller-responded', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid BookingRequestCreated event', () => {
+    const data = loadFixture('valid', 'booking-request-created.json');
+    const result = validator.validateEvent('booking-request-created', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+});
+
+describe('Invalid Fixtures — Engagement Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should reject CommunicationSent with invalid channel enum', () => {
+    const data = loadFixture('invalid', 'communication-sent-invalid-channel.json');
+    const result = validator.validateEvent('communication-sent', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject TravellerResponded with invalid responseType', () => {
+    const data = loadFixture('invalid', 'traveller-responded-invalid-type.json');
+    const result = validator.validateEvent('traveller-responded', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject BookingRequestCreated missing required tripId', () => {
+    const data = loadFixture('invalid', 'booking-request-missing-tripId.json');
+    const result = validator.validateEvent('booking-request-created', data);
     expect(result.valid).toBe(false);
     expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
   });

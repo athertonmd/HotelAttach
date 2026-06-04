@@ -103,4 +103,7 @@ export const EVENT_TYPE_TO_SCHEMA: Record<EventType, string> = {
   OpportunityUpdated: 'opportunity-updated',
   OpportunityClosed: 'opportunity-closed',
   OpportunityRejected: 'opportunity-rejected',
+  CommunicationSent: 'communication-sent',
+  TravellerResponded: 'traveller-responded',
+  BookingRequestCreated: 'booking-request-created',
 };

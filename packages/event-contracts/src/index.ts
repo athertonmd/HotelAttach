@@ -76,6 +76,23 @@ export type {
   OpportunityRejectedEvent,
 } from './opportunity-events.js';
 
+// Engagement events (Project 4 output)
+export type {
+  CommunicationType,
+  CommunicationChannel,
+  CommunicationDeliveryStatus,
+  TravellerResponseType,
+  TravellerResponseChannel,
+  BookingRequestStatus,
+  EngagementRecommendationType,
+  CommunicationSentPayload,
+  TravellerRespondedPayload,
+  BookingRequestCreatedPayload,
+  CommunicationSentEvent,
+  TravellerRespondedEvent,
+  BookingRequestCreatedEvent,
+} from './engagement-events.js';
+
 // Envelope factory
 export {
   createEnvelope,
