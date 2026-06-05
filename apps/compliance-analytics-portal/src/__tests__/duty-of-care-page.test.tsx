@@ -149,12 +149,24 @@ describe('DutyOfCarePage', () => {
           bookingsCreated: 0,
           responseRate: 0,
           conversionRate: 0,
+          escalationCount: 0,
+          byChannel: {},
+          byType: {},
+          responsesByType: {},
         },
       }),
       getEscalationSummary: async () => ({
         success: true as const,
         correlationId: '5',
-        data: { pendingCount: 0, totalCount: 0, byPriority: {}, byReason: {} },
+        data: {
+          pendingCount: 0,
+          totalCount: 0,
+          criticalCount: 0,
+          assignedCount: 0,
+          byPriority: {},
+          byReason: {},
+          escalations: [],
+        },
       }),
     };
 
