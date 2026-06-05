@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { DemoProvider } from '../auth/demo-context';
 import { Layout } from '../components/Layout';
 import { OpportunitiesPage } from '../pages/OpportunitiesPage';
 import { DutyOfCarePage } from '../pages/DutyOfCarePage';
@@ -9,20 +10,26 @@ import { EscalationsPage } from '../pages/EscalationsPage';
 
 function renderWithRouter(initialRoute: string): ReturnType<typeof render> {
   return render(
-    <MemoryRouter initialEntries={[initialRoute]}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/analytics/opportunities" element={<OpportunitiesPage />} />
-          <Route path="/analytics/duty-of-care" element={<DutyOfCarePage />} />
-          <Route path="/analytics/engagement" element={<EngagementPage />} />
-          <Route path="/analytics/escalations" element={<EscalationsPage />} />
-        </Route>
-      </Routes>
-    </MemoryRouter>,
+    <DemoProvider>
+      <MemoryRouter initialEntries={[initialRoute]}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/analytics/opportunities" element={<OpportunitiesPage />} />
+            <Route path="/analytics/duty-of-care" element={<DutyOfCarePage />} />
+            <Route path="/analytics/engagement" element={<EngagementPage />} />
+            <Route path="/analytics/escalations" element={<EscalationsPage />} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    </DemoProvider>,
   );
 }
 
 describe('Analytics Portal', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it('renders opportunities page', async () => {
     renderWithRouter('/analytics/opportunities');
     await waitFor(() => {

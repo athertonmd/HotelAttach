@@ -8,6 +8,7 @@ import { EmptyState } from '../components/EmptyState';
 import { createMockClient } from '../api/mock-client';
 import type { MockClient } from '../api/mock-client';
 import type { DutyOfCareSummary } from '../api/types';
+import { formatDate } from '../utils/formatters';
 
 const defaultClient = createMockClient({ delay: 0 });
 
@@ -15,7 +16,6 @@ const DEPARTURE_COLUMNS = [
   { key: 'destination', header: 'Destination' },
   { key: 'departureDate', header: 'Departure Date' },
   { key: 'riskLevel', header: 'Risk Level' },
-  { key: 'tripId', header: 'Trip ID' },
 ];
 
 interface DutyOfCarePageProps {
@@ -30,15 +30,12 @@ export function DutyOfCarePage({ client = defaultClient }: DutyOfCarePageProps):
   const fetchData = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
-
     const result = await client.getDutyOfCareSummary();
-
     if (!result.success) {
       setError(result.error.message);
       setLoading(false);
       return;
     }
-
     setSummary(result.data);
     setLoading(false);
   }, [client]);
@@ -60,53 +57,73 @@ export function DutyOfCarePage({ client = defaultClient }: DutyOfCarePageProps):
 
       <div
         data-testid="kpi-section"
-        style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
       >
         <KpiCard
           title="Visibility Rate"
           value={`${summary.visibilityRate}%`}
-          subtitle={`${summary.resolvedCount} of ${summary.totalTrips} trips resolved`}
+          subtitle={`${summary.resolvedCount} of ${summary.totalTrips} trips`}
+          trend="up"
         />
-        <KpiCard title="Unresolved Gaps" value={summary.unresolvedCount} variant="warning" />
-        <KpiCard title="High-Risk Unresolved" value={summary.highRiskUnresolved} variant="danger" />
+        <KpiCard
+          title="Unresolved Gaps"
+          value={summary.unresolvedCount}
+          variant="warning"
+          trend="down"
+          subtitle="-4 from last week"
+        />
+        <KpiCard
+          title="High-Risk Unresolved"
+          value={summary.highRiskUnresolved}
+          variant="danger"
+          trend="stable"
+        />
         <KpiCard
           title="Approaching Departure"
           value={summary.approachingDeparture}
           variant="danger"
+          trend="up"
           subtitle="Within 7 days"
         />
       </div>
 
-      <div style={{ display: 'flex', gap: 32, marginBottom: 24, flexWrap: 'wrap' }}>
-        <div data-testid="destination-breakdown">
-          <h3>Gaps by Destination</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div
+          data-testid="destination-breakdown"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">Gaps by Destination</h3>
           {Object.keys(summary.byDestination).length === 0 ? (
             <EmptyState />
           ) : (
-            <ul>
+            <div className="space-y-2">
               {Object.entries(summary.byDestination).map(([dest, count]) => (
-                <li key={dest}>
-                  {dest}: {count}
-                </li>
+                <div key={dest} className="flex items-center justify-between">
+                  <span className="text-sm text-slate-600">{dest}</span>
+                  <span className="text-sm font-medium text-slate-700">{count}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
-      </div>
 
-      <div data-testid="approaching-departure-section">
-        <h3>Trips Approaching Departure with Unresolved Gaps</h3>
-        {summary.approachingDepartureList.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <DataTable
-            columns={DEPARTURE_COLUMNS}
-            rows={summary.approachingDepartureList.map((trip) => ({
-              ...trip,
-              riskLevel: trip.riskLevel,
-            }))}
-          />
-        )}
+        <div
+          data-testid="approaching-departure-section"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">Approaching Departure</h3>
+          {summary.approachingDepartureList.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <DataTable
+              columns={DEPARTURE_COLUMNS}
+              rows={summary.approachingDepartureList.map((trip) => ({
+                ...trip,
+                departureDate: formatDate(trip.departureDate),
+              }))}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

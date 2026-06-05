@@ -45,18 +45,18 @@ describe('Mock API Client', () => {
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.items.length).toBe(2);
-        expect(result.data.total).toBe(6);
+        expect(result.data.total).toBe(50);
       }
     });
 
     it('supports pagination with offset', async () => {
       const client = createMockClient({ delay: 0 });
-      const result = await client.getOpportunityList({ limit: 2, offset: 4 });
+      const result = await client.getOpportunityList({ limit: 2, offset: 48 });
 
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.items.length).toBe(2);
-        expect(result.data.total).toBe(6);
+        expect(result.data.total).toBe(50);
       }
     });
 

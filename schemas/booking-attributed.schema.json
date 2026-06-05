@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/booking-attributed.schema.json",
+  "title": "BookingAttributed Event",
+  "description": "Published when a hotel booking has been attributed to a trigger — enables channel ROI and revenue attribution reporting",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BookingAttributed"
+    },
+    "payload": {
+      "$ref": "#/definitions/BookingAttributedPayload"
+    }
+  },
+  "definitions": {
+    "BookingAttributedPayload": {
+      "type": "object",
+      "description": "Payload for BookingAttributed events",
+      "required": [
+        "attributionId",
+        "bookingId",
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "attributionType",
+        "confidence",
+        "estimatedCommission",
+        "triggeringEventId",
+        "triggeringEventType",
+        "attributedAt"
+      ],
+      "properties": {
+        "attributionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "bookingId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "attributionType": {
+          "type": "string",
+          "enum": [
+            "independent",
+            "email",
+            "sms",
+            "push_notification",
+            "in_app",
+            "agent_intervention",
+            "corporate_policy",
+            "unknown"
+          ]
+        },
+        "communicationId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        },
+        "attributionWindowHours": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "hoursFromCommunication": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "estimatedCommission": {
+          "type": "number",
+          "minimum": 0
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "attributedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

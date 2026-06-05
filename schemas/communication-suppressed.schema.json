@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/communication-suppressed.schema.json",
+  "title": "CommunicationSuppressed Event",
+  "description": "Published when behaviour intelligence prevents a communication from being sent",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "CommunicationSuppressed"
+    },
+    "payload": {
+      "$ref": "#/definitions/CommunicationSuppressedPayload"
+    }
+  },
+  "definitions": {
+    "CommunicationSuppressedPayload": {
+      "type": "object",
+      "description": "Payload for CommunicationSuppressed events",
+      "required": [
+        "suppressionId",
+        "opportunityId",
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "suppressionReason",
+        "suppressedChannel",
+        "estimatedCostAvoided",
+        "daysToDeparture",
+        "triggeringEventId",
+        "triggeringEventType",
+        "suppressedAt"
+      ],
+      "properties": {
+        "suppressionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "suppressionReason": {
+          "type": "string",
+          "enum": [
+            "within_predicted_window",
+            "self_sufficient_traveller",
+            "recent_communication",
+            "fatigue_threshold",
+            "booking_detected"
+          ]
+        },
+        "suppressedChannel": {
+          "type": "string",
+          "enum": ["email", "sms", "push_notification", "in_app"]
+        },
+        "estimatedCostAvoided": {
+          "type": "number",
+          "minimum": 0
+        },
+        "daysToDeparture": {
+          "type": "number",
+          "minimum": 0
+        },
+        "predictedBookingDate": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "suppressedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/fatigue-threshold-crossed.schema.json",
+  "title": "FatigueThresholdCrossed Event",
+  "description": "Published when a traveller's communication fatigue has crossed a tier boundary",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "FatigueThresholdCrossed"
+    },
+    "payload": {
+      "$ref": "#/definitions/FatigueThresholdCrossedPayload"
+    }
+  },
+  "definitions": {
+    "FatigueThresholdCrossedPayload": {
+      "type": "object",
+      "description": "Payload for FatigueThresholdCrossed events",
+      "required": [
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "fatigueScore",
+        "fatigueLevel",
+        "previousLevel",
+        "direction",
+        "comms30d",
+        "ignoredRate",
+        "triggeringEventId",
+        "triggeringEventType",
+        "crossedAt"
+      ],
+      "properties": {
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "fatigueScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "fatigueLevel": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "previousLevel": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["increasing", "decreasing"]
+        },
+        "comms30d": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ignoredRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "crossedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

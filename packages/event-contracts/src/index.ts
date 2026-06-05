@@ -93,6 +93,39 @@ export type {
   BookingRequestCreatedEvent,
 } from './engagement-events.js';
 
+// Behaviour Intelligence events (Project 6 output)
+export type {
+  BehaviourSegment,
+  BehaviourChannel,
+  TravellerArchetypeType,
+  AttributionType,
+  DriftStatus,
+  DriftDirection,
+  FatigueLevel,
+  FatigueDirection,
+  RecommendedActionType,
+  SuppressionReason,
+  PredictionOutcome,
+  BehaviourProfileUpdatedPayload,
+  ArchetypeAssignedPayload,
+  BookingAttributedPayload,
+  BehaviourDriftDetectedPayload,
+  FatigueThresholdCrossedPayload,
+  ActionRecommendedPayload,
+  CommunicationSuppressedPayload,
+  CommunicationSuppressedByFatiguePayload,
+  PredictionOutcomeRecordedPayload,
+  BehaviourProfileUpdatedEvent,
+  ArchetypeAssignedEvent,
+  BookingAttributedEvent,
+  BehaviourDriftDetectedEvent,
+  FatigueThresholdCrossedEvent,
+  ActionRecommendedEvent,
+  CommunicationSuppressedEvent,
+  CommunicationSuppressedByFatigueEvent,
+  PredictionOutcomeRecordedEvent,
+} from './behaviour-events.js';
+
 // Envelope factory
 export {
   createEnvelope,

@@ -1,5 +1,6 @@
 /**
- * Realistic mock data for Phase 1 analytics dashboards.
+ * Realistic demo data for Phase 1 analytics dashboards.
+ * 50 opportunities, 20 escalations, ~100 engagement communications.
  */
 
 import type {
@@ -9,6 +10,15 @@ import type {
   EngagementSummary,
   EscalationSummary,
 } from './types.js';
+import {
+  generateOpportunities,
+  generateEscalations,
+  generateApproachingDepartures,
+} from './mock-data-generator.js';
+
+// --- Opportunities (50 items) ---
+
+export const mockOpportunityList: OpportunityListItem[] = generateOpportunities(50);
 
 export const mockOpportunitySummary: OpportunitySummary = {
   activeCount: 47,
@@ -25,211 +35,73 @@ export const mockOpportunitySummary: OpportunitySummary = {
   },
 };
 
-export const mockOpportunityList: OpportunityListItem[] = [
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440001',
-    tripId: '660e8400-e29b-41d4-a716-446655440001',
-    travellerId: '770e8400-e29b-41d4-a716-446655440001',
-    opportunityType: 'missing_hotel',
-    priority: 'critical',
-    lifecycleState: 'awaiting_action',
-    score: 92,
-    departureDate: '2025-02-15',
-    destination: 'London',
-    estimatedCommission: 245.0,
-    createdAt: '2025-01-28T10:00:00Z',
-  },
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440002',
-    tripId: '660e8400-e29b-41d4-a716-446655440002',
-    travellerId: '770e8400-e29b-41d4-a716-446655440002',
-    opportunityType: 'partial_coverage',
-    priority: 'high',
-    lifecycleState: 'identified',
-    score: 78,
-    departureDate: '2025-02-20',
-    destination: 'Paris',
-    estimatedCommission: 180.5,
-    createdAt: '2025-01-27T14:30:00Z',
-  },
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440003',
-    tripId: '660e8400-e29b-41d4-a716-446655440003',
-    travellerId: '770e8400-e29b-41d4-a716-446655440003',
-    opportunityType: 'policy_violation',
-    priority: 'medium',
-    lifecycleState: 'communication_sent',
-    score: 65,
-    departureDate: '2025-03-01',
-    destination: 'Berlin',
-    estimatedCommission: 120.0,
-    createdAt: '2025-01-26T09:15:00Z',
-  },
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440004',
-    tripId: '660e8400-e29b-41d4-a716-446655440004',
-    travellerId: '770e8400-e29b-41d4-a716-446655440004',
-    opportunityType: 'missing_hotel',
-    priority: 'high',
-    lifecycleState: 'awaiting_action',
-    score: 85,
-    departureDate: '2025-02-18',
-    destination: 'New York',
-    estimatedCommission: 310.0,
-    createdAt: '2025-01-25T16:45:00Z',
-  },
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440005',
-    tripId: '660e8400-e29b-41d4-a716-446655440005',
-    travellerId: '770e8400-e29b-41d4-a716-446655440005',
-    opportunityType: 'rate_opportunity',
-    priority: 'low',
-    lifecycleState: 'identified',
-    score: 55,
-    departureDate: '2025-03-10',
-    destination: 'Tokyo',
-    estimatedCommission: 95.0,
-    createdAt: '2025-01-24T11:00:00Z',
-  },
-  {
-    opportunityId: '550e8400-e29b-41d4-a716-446655440006',
-    tripId: '660e8400-e29b-41d4-a716-446655440006',
-    travellerId: '770e8400-e29b-41d4-a716-446655440006',
-    opportunityType: 'duty_of_care_gap',
-    priority: 'critical',
-    lifecycleState: 'escalated',
-    score: 95,
-    departureDate: '2025-02-12',
-    destination: 'Mumbai',
-    estimatedCommission: 275.0,
-    createdAt: '2025-01-23T08:30:00Z',
-  },
-];
+// --- Duty of Care ---
 
 export const mockDutyOfCareSummary: DutyOfCareSummary = {
-  totalTrips: 234,
-  resolvedCount: 198,
-  unresolvedCount: 36,
+  totalTrips: 312,
+  resolvedCount: 264,
+  unresolvedCount: 48,
   visibilityRate: 85,
-  highRiskUnresolved: 7,
-  approachingDeparture: 4,
+  highRiskUnresolved: 11,
+  approachingDeparture: 8,
   byDestination: {
-    London: 8,
+    London: 9,
+    'New York': 7,
     Paris: 6,
-    'New York': 5,
-    Tokyo: 4,
+    Singapore: 5,
+    Tokyo: 5,
+    Dubai: 4,
     Mumbai: 4,
-    Berlin: 3,
+    Frankfurt: 3,
     Sydney: 3,
-    Dubai: 3,
+    'Hong Kong': 2,
   },
-  approachingDepartureList: [
-    {
-      tripId: 'aaa00001-e29b-41d4-a716-446655440001',
-      travellerId: 'bbb00001-e29b-41d4-a716-446655440001',
-      destination: 'London',
-      departureDate: '2025-02-10',
-      riskLevel: 'high',
-    },
-    {
-      tripId: 'aaa00002-e29b-41d4-a716-446655440002',
-      travellerId: 'bbb00002-e29b-41d4-a716-446655440002',
-      destination: 'Mumbai',
-      departureDate: '2025-02-11',
-      riskLevel: 'critical',
-    },
-    {
-      tripId: 'aaa00003-e29b-41d4-a716-446655440003',
-      travellerId: 'bbb00003-e29b-41d4-a716-446655440003',
-      destination: 'Tokyo',
-      departureDate: '2025-02-12',
-      riskLevel: 'medium',
-    },
-    {
-      tripId: 'aaa00004-e29b-41d4-a716-446655440004',
-      travellerId: 'bbb00004-e29b-41d4-a716-446655440004',
-      destination: 'Paris',
-      departureDate: '2025-02-13',
-      riskLevel: 'high',
-    },
-  ],
+  approachingDepartureList: generateApproachingDepartures(8),
 };
 
+// --- Engagement (~100 communications) ---
+
 export const mockEngagementSummary: EngagementSummary = {
-  communicationsSent: 156,
-  responsesReceived: 89,
-  bookingsCreated: 34,
+  communicationsSent: 247,
+  responsesReceived: 142,
+  bookingsCreated: 58,
   responseRate: 57,
-  conversionRate: 22,
-  escalationCount: 14,
+  conversionRate: 23,
+  escalationCount: 20,
   byChannel: {
-    email: 98,
-    sms: 32,
-    push_notification: 18,
-    in_app: 8,
+    email: 148,
+    sms: 52,
+    push_notification: 31,
+    in_app: 16,
   },
   byType: {
-    missing_hotel_prompt: 72,
-    booking_confirmation: 34,
-    policy_reminder: 28,
-    departure_alert: 22,
+    missing_hotel_prompt: 108,
+    booking_confirmation: 56,
+    policy_reminder: 47,
+    departure_alert: 36,
   },
   responsesByType: {
-    accepted: 34,
-    declined: 22,
-    deferred: 18,
-    no_response: 15,
+    accepted: 58,
+    declined: 34,
+    deferred: 28,
+    no_response: 22,
   },
 };
+
+// --- Escalations (20 items) ---
 
 export const mockEscalationSummary: EscalationSummary = {
   pendingCount: 14,
   totalCount: 52,
-  criticalCount: 3,
-  assignedCount: 9,
-  byPriority: { critical: 3, high: 5, medium: 4, low: 2 },
+  criticalCount: 5,
+  assignedCount: 12,
+  byPriority: { critical: 5, high: 7, medium: 5, low: 3 },
   byReason: {
-    no_response: 5,
-    departure_imminent: 4,
-    policy_escalation: 3,
-    manual_review: 2,
+    no_response: 6,
+    departure_imminent: 5,
+    policy_escalation: 4,
+    manual_review: 3,
+    high_value_trip: 2,
   },
-  escalations: [
-    {
-      escalationId: 'esc-0001-e29b-41d4-a716-446655440001',
-      opportunityId: '550e8400-e29b-41d4-a716-446655440001',
-      travellerId: '770e8400-e29b-41d4-a716-446655440001',
-      reason: 'no_response',
-      priority: 'critical',
-      status: 'pending',
-      assignedAgentId: 'agent-001',
-    },
-    {
-      escalationId: 'esc-0002-e29b-41d4-a716-446655440002',
-      opportunityId: '550e8400-e29b-41d4-a716-446655440002',
-      travellerId: '770e8400-e29b-41d4-a716-446655440002',
-      reason: 'departure_imminent',
-      priority: 'high',
-      status: 'pending',
-      assignedAgentId: 'agent-002',
-    },
-    {
-      escalationId: 'esc-0003-e29b-41d4-a716-446655440003',
-      opportunityId: '550e8400-e29b-41d4-a716-446655440003',
-      travellerId: '770e8400-e29b-41d4-a716-446655440003',
-      reason: 'policy_escalation',
-      priority: 'medium',
-      status: 'assigned',
-      assignedAgentId: 'agent-001',
-    },
-    {
-      escalationId: 'esc-0004-e29b-41d4-a716-446655440004',
-      opportunityId: '550e8400-e29b-41d4-a716-446655440004',
-      travellerId: '770e8400-e29b-41d4-a716-446655440004',
-      reason: 'manual_review',
-      priority: 'low',
-      status: 'resolved',
-      assignedAgentId: 'agent-003',
-    },
-  ],
+  escalations: generateEscalations(20),
 };

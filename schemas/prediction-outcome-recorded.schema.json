@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/prediction-outcome-recorded.schema.json",
+  "title": "PredictionOutcomeRecorded Event",
+  "description": "Published when a behaviour intelligence prediction is validated against the actual outcome — enables prediction accuracy tracking",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "PredictionOutcomeRecorded"
+    },
+    "payload": {
+      "$ref": "#/definitions/PredictionOutcomeRecordedPayload"
+    }
+  },
+  "definitions": {
+    "PredictionOutcomeRecordedPayload": {
+      "type": "object",
+      "description": "Payload for PredictionOutcomeRecorded events",
+      "required": [
+        "predictionId",
+        "recommendationId",
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "opportunityId",
+        "recommendedAction",
+        "actualOutcome",
+        "wasCorrect",
+        "daysDifference",
+        "triggeringEventId",
+        "triggeringEventType",
+        "resolvedAt"
+      ],
+      "properties": {
+        "predictionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "recommendationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "recommendedAction": {
+          "type": "string",
+          "enum": ["do_nothing", "wait", "send_email", "send_sms", "send_push", "escalate"]
+        },
+        "actualOutcome": {
+          "type": "string",
+          "enum": [
+            "booked_independently",
+            "booked_after_communication",
+            "booked_after_escalation",
+            "expired_unbooked",
+            "cancelled"
+          ]
+        },
+        "wasCorrect": {
+          "type": "boolean"
+        },
+        "daysDifference": {
+          "type": "number"
+        },
+        "confidenceAtPrediction": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "archetype": {
+          "type": ["string", "null"],
+          "enum": [
+            "autopilot",
+            "procrastinator",
+            "responsive",
+            "nudge_needer",
+            "reluctant",
+            "chaotic",
+            "new_traveller",
+            null
+          ]
+        },
+        "destination": {
+          "type": ["string", "null"]
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "resolvedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -46,7 +46,16 @@
         "OpportunityRejected",
         "CommunicationSent",
         "TravellerResponded",
-        "BookingRequestCreated"
+        "BookingRequestCreated",
+        "BehaviourProfileUpdated",
+        "ArchetypeAssigned",
+        "BookingAttributed",
+        "BehaviourDriftDetected",
+        "FatigueThresholdCrossed",
+        "ActionRecommended",
+        "CommunicationSuppressed",
+        "CommunicationSuppressedByFatigue",
+        "PredictionOutcomeRecorded"
       ],
       "description": "Domain event type"
     },

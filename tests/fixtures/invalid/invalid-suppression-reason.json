@@ -1,0 +1,24 @@
+{
+  "eventId": "b7000002-1111-4000-8000-111111111111",
+  "schemaVersion": 1,
+  "tenantId": "11111111-1111-1111-1111-111111111111",
+  "corporateId": "22222222-2222-2222-2222-222222222222",
+  "sourceService": "hci\\.behaviour",
+  "timestamp": "2026-08-06T07:00:00.000Z",
+  "correlationId": "33333333-3333-3333-3333-333333333333",
+  "eventType": "CommunicationSuppressed",
+  "payload": {
+    "suppressionId": "a3000001-1111-4000-8000-111111111111",
+    "opportunityId": "77777777-7777-7777-7777-777777777777",
+    "travellerId": "44444444-4444-4444-4444-444444444444",
+    "tenantId": "11111111-1111-1111-1111-111111111111",
+    "corporateId": "22222222-2222-2222-2222-222222222222",
+    "suppressionReason": "traveller_is_on_holiday",
+    "suppressedChannel": "email",
+    "estimatedCostAvoided": 0.03,
+    "daysToDeparture": 12,
+    "triggeringEventId": "77777777-7777-7777-7777-777777777777",
+    "triggeringEventType": "OpportunityCreated",
+    "suppressedAt": "2026-08-06T07:00:00.000Z"
+  }
+}

@@ -9,13 +9,13 @@ import { StatusBadge } from '../components/StatusBadge';
 import { createMockClient } from '../api/mock-client';
 import type { MockClient } from '../api/mock-client';
 import type { OpportunitySummary, OpportunityListItem } from '../api/types';
+import { formatCurrency, formatDate } from '../utils/formatters';
 
 const defaultClient = createMockClient({ delay: 0 });
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 10;
 
 const TABLE_COLUMNS = [
-  { key: 'opportunityId', header: 'ID' },
   { key: 'opportunityType', header: 'Type' },
   { key: 'priority', header: 'Priority' },
   { key: 'lifecycleState', header: 'Status' },
@@ -79,6 +79,12 @@ export function OpportunitiesPage({
   if (error) return <ErrorState message={error} />;
   if (!summary) return <ErrorState message="No data available" />;
 
+  const formattedRows = items.map((item) => ({
+    ...item,
+    departureDate: formatDate(item.departureDate),
+    estimatedCommission: formatCurrency(item.estimatedCommission),
+  }));
+
   return (
     <div>
       <PageHeader
@@ -88,34 +94,64 @@ export function OpportunitiesPage({
 
       <div
         data-testid="kpi-section"
-        style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
       >
-        <KpiCard title="Active Opportunities" value={summary.activeCount} />
-        <KpiCard title="Critical" value={summary.criticalCount} variant="danger" />
-        <KpiCard title="Awaiting Action" value={summary.awaitingActionCount} variant="warning" />
-        <KpiCard title="At Risk" value={summary.atRiskCount} variant="danger" />
+        <KpiCard
+          title="Active Opportunities"
+          value={summary.activeCount}
+          trend="up"
+          subtitle="+3 this week"
+        />
+        <KpiCard
+          title="Critical"
+          value={summary.criticalCount}
+          variant="danger"
+          trend="down"
+          subtitle="-2 from last week"
+        />
+        <KpiCard
+          title="Awaiting Action"
+          value={summary.awaitingActionCount}
+          variant="warning"
+          trend="stable"
+        />
+        <KpiCard
+          title="At Risk"
+          value={summary.atRiskCount}
+          variant="danger"
+          trend="up"
+          subtitle="Departing within 48h"
+        />
       </div>
 
-      <div style={{ display: 'flex', gap: 32, marginBottom: 24, flexWrap: 'wrap' }}>
-        <div data-testid="priority-breakdown">
-          <h3>By Priority</h3>
-          <ul>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div
+          data-testid="priority-breakdown"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">By Priority</h3>
+          <div className="space-y-2">
             {Object.entries(summary.byPriority).map(([key, val]) => (
-              <li key={key}>
-                <StatusBadge status={key as 'critical' | 'high' | 'medium' | 'low'} /> {val}
-              </li>
+              <div key={key} className="flex items-center justify-between">
+                <StatusBadge status={key as 'critical' | 'high' | 'medium' | 'low'} />
+                <span className="text-sm font-medium text-slate-600">{val}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
-        <div data-testid="type-breakdown">
-          <h3>By Type</h3>
-          <ul>
+        <div
+          data-testid="type-breakdown"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">By Type</h3>
+          <div className="space-y-2">
             {Object.entries(summary.byType).map(([key, val]) => (
-              <li key={key}>
-                {key.replace(/_/g, ' ')}: {val}
-              </li>
+              <div key={key} className="flex items-center justify-between">
+                <span className="text-sm text-slate-600">{key.replace(/_/g, ' ')}</span>
+                <span className="text-sm font-medium text-slate-700">{val}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
 
@@ -132,7 +168,7 @@ export function OpportunitiesPage({
 
       <DataTable
         columns={TABLE_COLUMNS}
-        rows={items as unknown as Record<string, unknown>[]}
+        rows={formattedRows as unknown as Record<string, unknown>[]}
         page={page}
         pageSize={PAGE_SIZE}
         total={total}

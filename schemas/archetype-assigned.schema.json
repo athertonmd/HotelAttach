@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/archetype-assigned.schema.json",
+  "title": "ArchetypeAssigned Event",
+  "description": "Published when a traveller has been assigned or reassigned to a behaviour archetype",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "ArchetypeAssigned"
+    },
+    "payload": {
+      "$ref": "#/definitions/ArchetypeAssignedPayload"
+    }
+  },
+  "definitions": {
+    "ArchetypeAssignedPayload": {
+      "type": "object",
+      "description": "Payload for ArchetypeAssigned events",
+      "required": [
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "archetype",
+        "confidence",
+        "triggeringEventId",
+        "triggeringEventType",
+        "assignedAt"
+      ],
+      "properties": {
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "archetype": {
+          "type": "string",
+          "enum": [
+            "autopilot",
+            "procrastinator",
+            "responsive",
+            "nudge_needer",
+            "reluctant",
+            "chaotic",
+            "new_traveller"
+          ]
+        },
+        "previousArchetype": {
+          "type": ["string", "null"],
+          "enum": [
+            "autopilot",
+            "procrastinator",
+            "responsive",
+            "nudge_needer",
+            "reluctant",
+            "chaotic",
+            "new_traveller",
+            null
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "assignedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

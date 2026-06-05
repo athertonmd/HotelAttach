@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/action-recommended.schema.json",
+  "title": "ActionRecommended Event",
+  "description": "Published when the Behaviour Intelligence engine generates a recommended action for an opportunity",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "ActionRecommended"
+    },
+    "payload": {
+      "$ref": "#/definitions/ActionRecommendedPayload"
+    }
+  },
+  "definitions": {
+    "ActionRecommendedPayload": {
+      "type": "object",
+      "description": "Payload for ActionRecommended events",
+      "required": [
+        "recommendationId",
+        "opportunityId",
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "action",
+        "confidence",
+        "explanationText",
+        "predictedLeadTimeDays",
+        "daysToDeparture",
+        "estimatedRevenueAtRisk",
+        "fatigueLevel",
+        "driftStatus",
+        "archetype",
+        "expiresAt",
+        "triggeringEventId",
+        "triggeringEventType",
+        "recommendedAt"
+      ],
+      "properties": {
+        "recommendationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["do_nothing", "wait", "send_email", "send_sms", "send_push", "escalate"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "explanationText": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "predictedLeadTimeDays": {
+          "type": "number",
+          "minimum": 0
+        },
+        "daysToDeparture": {
+          "type": "number",
+          "minimum": 0
+        },
+        "estimatedRevenueAtRisk": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fatigueLevel": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "driftStatus": {
+          "type": "string",
+          "enum": ["stable", "moderate", "significant"]
+        },
+        "archetype": {
+          "type": "string",
+          "enum": [
+            "autopilot",
+            "procrastinator",
+            "responsive",
+            "nudge_needer",
+            "reluctant",
+            "chaotic",
+            "new_traveller"
+          ]
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "recommendedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -6,12 +6,12 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description, actions }: PageHeaderProps): React.JSX.Element {
   return (
-    <div data-testid="page-header" style={{ marginBottom: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ margin: 0 }}>{title}</h1>
+    <div data-testid="page-header" className="mb-8">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{title}</h1>
         {actions && <div>{actions}</div>}
       </div>
-      {description && <p style={{ color: '#666', marginTop: 4 }}>{description}</p>}
+      {description && <p className="text-sm text-slate-500 mt-1">{description}</p>}
     </div>
   );
 }

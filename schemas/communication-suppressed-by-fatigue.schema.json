@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/communication-suppressed-by-fatigue.schema.json",
+  "title": "CommunicationSuppressedByFatigue Event",
+  "description": "Published when a communication is suppressed specifically due to traveller fatigue levels",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "CommunicationSuppressedByFatigue"
+    },
+    "payload": {
+      "$ref": "#/definitions/CommunicationSuppressedByFatiguePayload"
+    }
+  },
+  "definitions": {
+    "CommunicationSuppressedByFatiguePayload": {
+      "type": "object",
+      "description": "Payload for CommunicationSuppressedByFatigue events",
+      "required": [
+        "suppressionId",
+        "opportunityId",
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "fatigueScore",
+        "fatigueLevel",
+        "suppressedChannel",
+        "comms30d",
+        "estimatedCostAvoided",
+        "triggeringEventId",
+        "triggeringEventType",
+        "suppressedAt"
+      ],
+      "properties": {
+        "suppressionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "opportunityId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "fatigueScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "fatigueLevel": {
+          "type": "string",
+          "enum": ["high", "critical"]
+        },
+        "suppressedChannel": {
+          "type": "string",
+          "enum": ["email", "sms", "push_notification", "in_app"]
+        },
+        "comms30d": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimatedCostAvoided": {
+          "type": "number",
+          "minimum": 0
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "suppressedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

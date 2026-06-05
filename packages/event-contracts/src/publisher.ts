@@ -106,4 +106,14 @@ export const EVENT_TYPE_TO_SCHEMA: Record<EventType, string> = {
   CommunicationSent: 'communication-sent',
   TravellerResponded: 'traveller-responded',
   BookingRequestCreated: 'booking-request-created',
+  // Behaviour Intelligence (Project 6)
+  BehaviourProfileUpdated: 'behaviour-profile-updated',
+  ArchetypeAssigned: 'archetype-assigned',
+  BookingAttributed: 'booking-attributed',
+  BehaviourDriftDetected: 'behaviour-drift-detected',
+  FatigueThresholdCrossed: 'fatigue-threshold-crossed',
+  ActionRecommended: 'action-recommended',
+  CommunicationSuppressed: 'communication-suppressed',
+  CommunicationSuppressedByFatigue: 'communication-suppressed-by-fatigue',
+  PredictionOutcomeRecorded: 'prediction-outcome-recorded',
 };

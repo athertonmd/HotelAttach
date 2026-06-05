@@ -60,6 +60,15 @@ describe('Schema Compilation', () => {
       'communication-sent',
       'traveller-responded',
       'booking-request-created',
+      'behaviour-profile-updated',
+      'archetype-assigned',
+      'booking-attributed',
+      'behaviour-drift-detected',
+      'fatigue-threshold-crossed',
+      'action-recommended',
+      'communication-suppressed',
+      'communication-suppressed-by-fatigue',
+      'prediction-outcome-recorded',
     ];
 
     for (const name of expectedSchemas) {
@@ -122,6 +131,15 @@ describe('Event Type Constants', () => {
       'communication-sent.schema.json': 'CommunicationSent',
       'traveller-responded.schema.json': 'TravellerResponded',
       'booking-request-created.schema.json': 'BookingRequestCreated',
+      'behaviour-profile-updated.schema.json': 'BehaviourProfileUpdated',
+      'archetype-assigned.schema.json': 'ArchetypeAssigned',
+      'booking-attributed.schema.json': 'BookingAttributed',
+      'behaviour-drift-detected.schema.json': 'BehaviourDriftDetected',
+      'fatigue-threshold-crossed.schema.json': 'FatigueThresholdCrossed',
+      'action-recommended.schema.json': 'ActionRecommended',
+      'communication-suppressed.schema.json': 'CommunicationSuppressed',
+      'communication-suppressed-by-fatigue.schema.json': 'CommunicationSuppressedByFatigue',
+      'prediction-outcome-recorded.schema.json': 'PredictionOutcomeRecorded',
     };
 
     for (const [file, expectedType] of Object.entries(schemaToEventType)) {
@@ -608,5 +626,163 @@ describe('Invalid Fixtures — Engagement Events', () => {
     const result = validator.validateEvent('booking-request-created', data);
     expect(result.valid).toBe(false);
     expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
+  });
+});
+
+// === Project 6 Schema Contract Tests — Behaviour Intelligence ===
+
+describe('Valid Fixtures — Behaviour Intelligence Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should validate a valid BehaviourProfileUpdated event', () => {
+    const data = loadFixture('valid', 'behaviour-profile-updated.json');
+    const result = validator.validateEvent('behaviour-profile-updated', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid ArchetypeAssigned event', () => {
+    const data = loadFixture('valid', 'archetype-assigned.json');
+    const result = validator.validateEvent('archetype-assigned', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid BookingAttributed event', () => {
+    const data = loadFixture('valid', 'booking-attributed.json');
+    const result = validator.validateEvent('booking-attributed', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid BehaviourDriftDetected event', () => {
+    const data = loadFixture('valid', 'behaviour-drift-detected.json');
+    const result = validator.validateEvent('behaviour-drift-detected', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid FatigueThresholdCrossed event', () => {
+    const data = loadFixture('valid', 'fatigue-threshold-crossed.json');
+    const result = validator.validateEvent('fatigue-threshold-crossed', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid ActionRecommended event', () => {
+    const data = loadFixture('valid', 'action-recommended.json');
+    const result = validator.validateEvent('action-recommended', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid CommunicationSuppressed event', () => {
+    const data = loadFixture('valid', 'communication-suppressed.json');
+    const result = validator.validateEvent('communication-suppressed', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid CommunicationSuppressedByFatigue event', () => {
+    const data = loadFixture('valid', 'communication-suppressed-by-fatigue.json');
+    const result = validator.validateEvent('communication-suppressed-by-fatigue', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('should validate a valid PredictionOutcomeRecorded event', () => {
+    const data = loadFixture('valid', 'prediction-outcome-recorded.json');
+    const result = validator.validateEvent('prediction-outcome-recorded', data);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+});
+
+describe('Invalid Fixtures — Behaviour Intelligence Events', () => {
+  let validator: SchemaValidator;
+
+  beforeAll(() => {
+    validator = new SchemaValidator();
+  });
+
+  it('should reject BehaviourProfileUpdated with confidenceScore > 100', () => {
+    const data = loadFixture('invalid', 'invalid-behaviour-profile-confidence.json');
+    const result = validator.validateEvent('behaviour-profile-updated', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'maximum')).toBe(true);
+  });
+
+  it('should reject BehaviourProfileUpdated missing tripCountUsed', () => {
+    const data = loadFixture('invalid', 'missing-trip-count-used.json');
+    const result = validator.validateEvent('behaviour-profile-updated', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
+  });
+
+  it('should reject ArchetypeAssigned with invalid archetype enum', () => {
+    const data = loadFixture('invalid', 'invalid-archetype.json');
+    const result = validator.validateEvent('archetype-assigned', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject BookingAttributed with invalid attributionType enum', () => {
+    const data = loadFixture('invalid', 'invalid-attribution-type.json');
+    const result = validator.validateEvent('booking-attributed', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject BehaviourDriftDetected with driftScore > 100', () => {
+    const data = loadFixture('invalid', 'invalid-drift-score.json');
+    const result = validator.validateEvent('behaviour-drift-detected', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'maximum')).toBe(true);
+  });
+
+  it('should reject FatigueThresholdCrossed with invalid fatigueLevel', () => {
+    const data = loadFixture('invalid', 'invalid-fatigue-level.json');
+    const result = validator.validateEvent('fatigue-threshold-crossed', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject ActionRecommended with invalid action enum', () => {
+    const data = loadFixture('invalid', 'invalid-recommended-action.json');
+    const result = validator.validateEvent('action-recommended', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject ActionRecommended missing estimatedRevenueAtRisk', () => {
+    const data = loadFixture('invalid', 'missing-estimated-revenue-at-risk.json');
+    const result = validator.validateEvent('action-recommended', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'required')).toBe(true);
+  });
+
+  it('should reject CommunicationSuppressed with invalid suppressionReason', () => {
+    const data = loadFixture('invalid', 'invalid-suppression-reason.json');
+    const result = validator.validateEvent('communication-suppressed', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject CommunicationSuppressedByFatigue with fatigueLevel "low"', () => {
+    const data = loadFixture('invalid', 'invalid-fatigue-suppression.json');
+    const result = validator.validateEvent('communication-suppressed-by-fatigue', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
+  });
+
+  it('should reject PredictionOutcomeRecorded with invalid actualOutcome', () => {
+    const data = loadFixture('invalid', 'invalid-prediction-outcome.json');
+    const result = validator.validateEvent('prediction-outcome-recorded', data);
+    expect(result.valid).toBe(false);
+    expect(result.errors.some((e) => e.keyword === 'enum')).toBe(true);
   });
 });

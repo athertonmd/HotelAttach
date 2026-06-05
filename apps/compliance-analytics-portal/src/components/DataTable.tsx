@@ -22,20 +22,30 @@ export function DataTable({
   total,
   onPageChange,
 }: DataTableProps): React.JSX.Element {
-  if (loading) return <div data-testid="table-loading">Loading...</div>;
-  if (rows.length === 0) return <div data-testid="table-empty">No data available</div>;
+  if (loading)
+    return (
+      <div data-testid="table-loading" className="py-12 text-center text-slate-400">
+        Loading...
+      </div>
+    );
+  if (rows.length === 0)
+    return (
+      <div data-testid="table-empty" className="py-12 text-center text-slate-400">
+        No data available
+      </div>
+    );
 
   const totalPages = total ? Math.ceil(total / pageSize) : 1;
 
   return (
-    <div>
-      <table data-testid="data-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <table data-testid="data-table" className="w-full text-sm">
         <thead>
-          <tr>
+          <tr className="border-b border-slate-100 bg-slate-50">
             {columns.map((col) => (
               <th
                 key={col.key}
-                style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid #eee' }}
+                className="text-left px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wider"
               >
                 {col.header}
               </th>
@@ -44,9 +54,12 @@ export function DataTable({
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr key={idx}>
+            <tr
+              key={idx}
+              className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors"
+            >
               {columns.map((col) => (
-                <td key={col.key} style={{ padding: 8, borderBottom: '1px solid #f5f5f5' }}>
+                <td key={col.key} className="px-4 py-3 text-slate-700">
                   {String(row[col.key] ?? '')}
                 </td>
               ))}
@@ -55,14 +68,25 @@ export function DataTable({
         </tbody>
       </table>
       {onPageChange && totalPages > 1 && (
-        <div data-testid="table-pagination" style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-          <button disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
+        <div
+          data-testid="table-pagination"
+          className="flex items-center justify-between px-4 py-3 border-t border-slate-100 bg-slate-50"
+        >
+          <button
+            disabled={page <= 1}
+            onClick={() => onPageChange(page - 1)}
+            className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
             Previous
           </button>
-          <span>
+          <span className="text-sm text-slate-500">
             Page {page} of {totalPages}
           </span>
-          <button disabled={page >= totalPages} onClick={() => onPageChange(page + 1)}>
+          <button
+            disabled={page >= totalPages}
+            onClick={() => onPageChange(page + 1)}
+            className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
             Next
           </button>
         </div>

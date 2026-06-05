@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/behaviour-drift-detected.schema.json",
+  "title": "BehaviourDriftDetected Event",
+  "description": "Published when a traveller's behaviour has deviated from their established baseline",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BehaviourDriftDetected"
+    },
+    "payload": {
+      "$ref": "#/definitions/BehaviourDriftDetectedPayload"
+    }
+  },
+  "definitions": {
+    "BehaviourDriftDetectedPayload": {
+      "type": "object",
+      "description": "Payload for BehaviourDriftDetected events",
+      "required": [
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "driftScore",
+        "stabilityScore",
+        "driftStatus",
+        "previousStatus",
+        "driftDirection",
+        "triggeringEventId",
+        "triggeringEventType",
+        "detectedAt"
+      ],
+      "properties": {
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "driftScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "stabilityScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "driftStatus": {
+          "type": "string",
+          "enum": ["stable", "moderate", "significant"]
+        },
+        "previousStatus": {
+          "type": "string",
+          "enum": ["stable", "moderate", "significant"]
+        },
+        "driftDirection": {
+          "type": "string",
+          "enum": ["improving", "declining", "lateral"]
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

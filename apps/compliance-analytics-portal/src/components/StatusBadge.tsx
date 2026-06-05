@@ -13,29 +13,25 @@ interface StatusBadgeProps {
   status: BadgeStatus;
 }
 
-const colors: Record<BadgeStatus, string> = {
-  critical: '#d32f2f',
-  high: '#f57c00',
-  medium: '#fbc02d',
-  low: '#388e3c',
-  active: '#1976d2',
-  closed: '#757575',
-  rejected: '#d32f2f',
-  suppressed: '#9e9e9e',
-  awaiting_action: '#ff9800',
+const badgeStyles: Record<BadgeStatus, string> = {
+  critical: 'bg-red-100 text-red-700 border-red-200',
+  high: 'bg-orange-100 text-orange-700 border-orange-200',
+  medium: 'bg-amber-100 text-amber-700 border-amber-200',
+  low: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+  active: 'bg-blue-100 text-blue-700 border-blue-200',
+  closed: 'bg-slate-100 text-slate-600 border-slate-200',
+  rejected: 'bg-red-100 text-red-700 border-red-200',
+  suppressed: 'bg-slate-100 text-slate-500 border-slate-200',
+  awaiting_action: 'bg-amber-100 text-amber-700 border-amber-200',
 };
 
 export function StatusBadge({ status }: StatusBadgeProps): React.JSX.Element {
+  const classes = badgeStyles[status] ?? 'bg-slate-100 text-slate-600 border-slate-200';
+
   return (
     <span
       data-testid="status-badge"
-      style={{
-        backgroundColor: colors[status] ?? '#ccc',
-        color: '#fff',
-        padding: '2px 8px',
-        borderRadius: 4,
-        fontSize: 12,
-      }}
+      className={`inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full border ${classes}`}
     >
       {status.replace(/_/g, ' ')}
     </span>

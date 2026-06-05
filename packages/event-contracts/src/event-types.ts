@@ -29,6 +29,16 @@ export const EVENT_TYPES = {
   CommunicationSent: 'CommunicationSent',
   TravellerResponded: 'TravellerResponded',
   BookingRequestCreated: 'BookingRequestCreated',
+  // Behaviour Intelligence (Project 6)
+  BehaviourProfileUpdated: 'BehaviourProfileUpdated',
+  ArchetypeAssigned: 'ArchetypeAssigned',
+  BookingAttributed: 'BookingAttributed',
+  BehaviourDriftDetected: 'BehaviourDriftDetected',
+  FatigueThresholdCrossed: 'FatigueThresholdCrossed',
+  ActionRecommended: 'ActionRecommended',
+  CommunicationSuppressed: 'CommunicationSuppressed',
+  CommunicationSuppressedByFatigue: 'CommunicationSuppressedByFatigue',
+  PredictionOutcomeRecorded: 'PredictionOutcomeRecorded',
 } as const;
 
 export type EventTypeConstant = (typeof EVENT_TYPES)[keyof typeof EVENT_TYPES];

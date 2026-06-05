@@ -36,6 +36,16 @@ export const SCHEMA_FILES = {
   'communication-sent': 'communication-sent.schema.json',
   'traveller-responded': 'traveller-responded.schema.json',
   'booking-request-created': 'booking-request-created.schema.json',
+  // Behaviour Intelligence (Project 6)
+  'behaviour-profile-updated': 'behaviour-profile-updated.schema.json',
+  'archetype-assigned': 'archetype-assigned.schema.json',
+  'booking-attributed': 'booking-attributed.schema.json',
+  'behaviour-drift-detected': 'behaviour-drift-detected.schema.json',
+  'fatigue-threshold-crossed': 'fatigue-threshold-crossed.schema.json',
+  'action-recommended': 'action-recommended.schema.json',
+  'communication-suppressed': 'communication-suppressed.schema.json',
+  'communication-suppressed-by-fatigue': 'communication-suppressed-by-fatigue.schema.json',
+  'prediction-outcome-recorded': 'prediction-outcome-recorded.schema.json',
 } as const;
 
 export type SchemaName = keyof typeof SCHEMA_FILES;

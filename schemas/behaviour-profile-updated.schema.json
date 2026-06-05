@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hci.platform/schemas/behaviour-profile-updated.schema.json",
+  "title": "BehaviourProfileUpdated Event",
+  "description": "Published when a traveller's behaviour profile metrics have been recalculated by the Behaviour Intelligence service",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "eventType": {
+      "const": "BehaviourProfileUpdated"
+    },
+    "payload": {
+      "$ref": "#/definitions/BehaviourProfileUpdatedPayload"
+    }
+  },
+  "definitions": {
+    "BehaviourProfileUpdatedPayload": {
+      "type": "object",
+      "description": "Payload for BehaviourProfileUpdated events",
+      "required": [
+        "travellerId",
+        "tenantId",
+        "corporateId",
+        "avgLeadTimeDays",
+        "bookingConsistency",
+        "bookingVariabilityDays",
+        "complianceRate",
+        "avgResponseTimeHours",
+        "preferredChannel",
+        "selfBookingRate",
+        "tripsAnalysed",
+        "tripCountUsed",
+        "predictedLeadTimeDays",
+        "confidenceScore",
+        "segment",
+        "triggeringEventId",
+        "triggeringEventType",
+        "calculatedAt"
+      ],
+      "properties": {
+        "travellerId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "corporateId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "avgLeadTimeDays": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 365
+        },
+        "bookingConsistency": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "bookingVariabilityDays": {
+          "type": "number",
+          "minimum": 0
+        },
+        "complianceRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "avgResponseTimeHours": {
+          "type": "number",
+          "minimum": 0
+        },
+        "preferredChannel": {
+          "type": "string",
+          "enum": ["email", "sms", "push_notification", "in_app"]
+        },
+        "selfBookingRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "tripsAnalysed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tripCountUsed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "predictedLeadTimeDays": {
+          "type": "number",
+          "minimum": 0
+        },
+        "confidenceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "segment": {
+          "type": "string",
+          "enum": [
+            "self_sufficient",
+            "reliable_late",
+            "needs_prompting",
+            "requires_intervention",
+            "non_compliant"
+          ]
+        },
+        "triggeringEventId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "triggeringEventType": {
+          "type": "string"
+        },
+        "calculatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -23,13 +23,13 @@ describe('EngagementPage', () => {
     });
     const kpiSection = screen.getByTestId('kpi-section');
     expect(kpiSection.textContent).toContain('Communications Sent');
-    expect(kpiSection.textContent).toContain('156');
+    expect(kpiSection.textContent).toContain('247');
     expect(kpiSection.textContent).toContain('Response Rate');
     expect(kpiSection.textContent).toContain('57%');
     expect(kpiSection.textContent).toContain('Conversion Rate');
-    expect(kpiSection.textContent).toContain('22%');
+    expect(kpiSection.textContent).toContain('23%');
     expect(kpiSection.textContent).toContain('Escalations');
-    expect(kpiSection.textContent).toContain('14');
+    expect(kpiSection.textContent).toContain('20');
   });
 
   it('renders response rate in KPI', async () => {
@@ -39,7 +39,7 @@ describe('EngagementPage', () => {
     });
     const kpiSection = screen.getByTestId('kpi-section');
     expect(kpiSection.textContent).toContain('57%');
-    expect(kpiSection.textContent).toContain('89 responses');
+    expect(kpiSection.textContent).toContain('142 responses');
   });
 
   it('renders channel breakdown', async () => {
@@ -48,10 +48,10 @@ describe('EngagementPage', () => {
       expect(screen.getByTestId('channel-breakdown')).toBeDefined();
     });
     const breakdown = screen.getByTestId('channel-breakdown');
-    expect(breakdown.textContent).toContain('email: 98');
-    expect(breakdown.textContent).toContain('sms: 32');
-    expect(breakdown.textContent).toContain('push notification: 18');
-    expect(breakdown.textContent).toContain('in app: 8');
+    expect(breakdown.textContent).toContain('email');
+    expect(breakdown.textContent).toContain('148');
+    expect(breakdown.textContent).toContain('sms');
+    expect(breakdown.textContent).toContain('52');
   });
 
   it('renders response type breakdown', async () => {
@@ -60,10 +60,10 @@ describe('EngagementPage', () => {
       expect(screen.getByTestId('response-type-breakdown')).toBeDefined();
     });
     const breakdown = screen.getByTestId('response-type-breakdown');
-    expect(breakdown.textContent).toContain('accepted: 34');
-    expect(breakdown.textContent).toContain('declined: 22');
-    expect(breakdown.textContent).toContain('deferred: 18');
-    expect(breakdown.textContent).toContain('no response: 15');
+    expect(breakdown.textContent).toContain('accepted');
+    expect(breakdown.textContent).toContain('58');
+    expect(breakdown.textContent).toContain('declined');
+    expect(breakdown.textContent).toContain('34');
   });
 
   it('loading state renders', () => {

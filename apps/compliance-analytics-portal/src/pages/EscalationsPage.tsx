@@ -12,9 +12,6 @@ import type { EscalationSummary } from '../api/types';
 const defaultClient = createMockClient({ delay: 0 });
 
 const ESCALATION_COLUMNS = [
-  { key: 'escalationId', header: 'ID' },
-  { key: 'opportunityId', header: 'Opportunity' },
-  { key: 'travellerId', header: 'Traveller' },
   { key: 'reason', header: 'Reason' },
   { key: 'priority', header: 'Priority' },
   { key: 'status', header: 'Status' },
@@ -35,15 +32,12 @@ export function EscalationsPage({
   const fetchData = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
-
     const result = await client.getEscalationSummary();
-
     if (!result.success) {
       setError(result.error.message);
       setLoading(false);
       return;
     }
-
     setSummary(result.data);
     setLoading(false);
   }, [client]);
@@ -65,48 +59,73 @@ export function EscalationsPage({
 
       <div
         data-testid="kpi-section"
-        style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
       >
-        <KpiCard title="Pending" value={summary.pendingCount} variant="warning" />
-        <KpiCard title="Total Escalations" value={summary.totalCount} />
-        <KpiCard title="Critical" value={summary.criticalCount} variant="danger" />
-        <KpiCard title="Assigned" value={summary.assignedCount} variant="success" />
+        <KpiCard
+          title="Pending"
+          value={summary.pendingCount}
+          variant="warning"
+          trend="down"
+          subtitle="-3 from yesterday"
+        />
+        <KpiCard
+          title="Total Escalations"
+          value={summary.totalCount}
+          trend="up"
+          subtitle="All time"
+        />
+        <KpiCard title="Critical" value={summary.criticalCount} variant="danger" trend="stable" />
+        <KpiCard
+          title="Assigned"
+          value={summary.assignedCount}
+          variant="success"
+          trend="up"
+          subtitle="Across 8 agents"
+        />
       </div>
 
-      <div style={{ display: 'flex', gap: 32, marginBottom: 24, flexWrap: 'wrap' }}>
-        <div data-testid="priority-breakdown">
-          <h3>By Priority</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div
+          data-testid="priority-breakdown"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">By Priority</h3>
           {Object.keys(summary.byPriority).length === 0 ? (
             <EmptyState />
           ) : (
-            <ul>
+            <div className="space-y-2">
               {Object.entries(summary.byPriority).map(([priority, count]) => (
-                <li key={priority}>
-                  {priority}: {count}
-                </li>
+                <div key={priority} className="flex items-center justify-between">
+                  <span className="text-sm text-slate-600">{priority}</span>
+                  <span className="text-sm font-medium text-slate-700">{count}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
 
-        <div data-testid="reason-breakdown">
-          <h3>By Reason</h3>
+        <div
+          data-testid="reason-breakdown"
+          className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold text-slate-700 mb-3">By Reason</h3>
           {Object.keys(summary.byReason).length === 0 ? (
             <EmptyState />
           ) : (
-            <ul>
+            <div className="space-y-2">
               {Object.entries(summary.byReason).map(([reason, count]) => (
-                <li key={reason}>
-                  {reason.replace(/_/g, ' ')}: {count}
-                </li>
+                <div key={reason} className="flex items-center justify-between">
+                  <span className="text-sm text-slate-600">{reason.replace(/_/g, ' ')}</span>
+                  <span className="text-sm font-medium text-slate-700">{count}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>
 
       <div data-testid="escalation-table-section">
-        <h3>Escalation Queue</h3>
+        <h3 className="text-sm font-semibold text-slate-700 mb-3">Escalation Queue</h3>
         {summary.escalations.length === 0 ? (
           <EmptyState />
         ) : (

@@ -29,7 +29,16 @@ export type EventType =
   | 'OpportunityRejected'
   | 'CommunicationSent'
   | 'TravellerResponded'
-  | 'BookingRequestCreated';
+  | 'BookingRequestCreated'
+  | 'BehaviourProfileUpdated'
+  | 'ArchetypeAssigned'
+  | 'BookingAttributed'
+  | 'BehaviourDriftDetected'
+  | 'FatigueThresholdCrossed'
+  | 'ActionRecommended'
+  | 'CommunicationSuppressed'
+  | 'CommunicationSuppressedByFatigue'
+  | 'PredictionOutcomeRecorded';
 
 export interface HCIEventEnvelope<T extends object = object> {
   /** Unique identifier for this event instance (UUID v4) */
