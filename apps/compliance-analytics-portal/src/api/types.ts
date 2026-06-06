@@ -163,3 +163,31 @@ export interface PredictionAccuracySummary {
   correctPredictions: number;
   avgDaysDifference: number;
 }
+
+// --- Behaviour Traveller Detail ---
+
+export interface BehaviourTravellerRow {
+  travellerId: string;
+  archetype: string;
+  confidence: number;
+  fatigueLevel: string;
+  fatigueScore: number;
+  driftStatus: string;
+  revenueAtRisk: number;
+  recommendedChannel: string;
+  suppressionCount: number;
+  lastCommunication: string;
+  recommendedAction: string;
+}
+
+export interface BehaviourTravellerListResponse {
+  items: BehaviourTravellerRow[];
+  total: number;
+}
+
+export interface BehaviourTravellerListParams {
+  archetype?: string;
+  fatigueLevel?: string;
+  limit?: number;
+  offset?: number;
+}

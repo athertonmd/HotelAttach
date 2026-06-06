@@ -7,6 +7,8 @@ import { DutyOfCarePage } from './pages/DutyOfCarePage';
 import { EngagementPage } from './pages/EngagementPage';
 import { EscalationsPage } from './pages/EscalationsPage';
 import { BehaviourPage } from './pages/BehaviourPage';
+import { BehaviourArchetypesPage } from './pages/BehaviourArchetypesPage';
+import { BehaviourFatiguePage } from './pages/BehaviourFatiguePage';
 import type { ReactNode } from 'react';
 
 function GuardedRoute({
@@ -74,7 +76,7 @@ export function App(): React.JSX.Element {
               path="/analytics/behaviour/archetypes"
               element={
                 <GuardedRoute path="/analytics/behaviour">
-                  <BehaviourPage />
+                  <BehaviourArchetypesPage />
                 </GuardedRoute>
               }
             />
@@ -82,7 +84,7 @@ export function App(): React.JSX.Element {
               path="/analytics/behaviour/fatigue"
               element={
                 <GuardedRoute path="/analytics/behaviour">
-                  <BehaviourPage />
+                  <BehaviourFatiguePage />
                 </GuardedRoute>
               }
             />

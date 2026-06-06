@@ -196,3 +196,38 @@ export const mockPredictionAccuracy: PredictionAccuracySummary = {
   correctPredictions: 237,
   avgDaysDifference: 2.3,
 };
+
+// --- Behaviour Traveller Detail Mock Data ---
+
+import type { BehaviourTravellerRow } from './types.js';
+
+const archetypes = [
+  'autopilot',
+  'procrastinator',
+  'responsive',
+  'nudge_needer',
+  'reluctant',
+  'chaotic',
+  'new_traveller',
+];
+const fatigueLevels = ['low', 'medium', 'high', 'critical'];
+const driftStatuses = ['stable', 'moderate', 'significant'];
+const channels = ['email', 'sms', 'push_notification', 'in_app'];
+const actions = ['do_nothing', 'wait', 'send_email', 'send_sms', 'send_push', 'escalate'];
+
+export const mockBehaviourTravellers: BehaviourTravellerRow[] = Array.from(
+  { length: 30 },
+  (_, i) => ({
+    travellerId: `trav-${String(i + 1).padStart(3, '0')}`,
+    archetype: archetypes[i % archetypes.length] as string,
+    confidence: 50 + Math.round(Math.random() * 50),
+    fatigueLevel: fatigueLevels[i % fatigueLevels.length] as string,
+    fatigueScore: 10 + (i % fatigueLevels.length) * 25,
+    driftStatus: driftStatuses[i % driftStatuses.length] as string,
+    revenueAtRisk: Math.round(Math.random() * 3000),
+    recommendedChannel: channels[i % channels.length] as string,
+    suppressionCount: Math.floor(Math.random() * 5),
+    lastCommunication: new Date(Date.now() - i * 86400000).toISOString(),
+    recommendedAction: actions[i % actions.length] as string,
+  }),
+);

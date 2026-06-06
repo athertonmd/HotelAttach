@@ -17,6 +17,8 @@ import type {
   RevenueRiskSummary,
   ActionPerformanceSummary,
   PredictionAccuracySummary,
+  BehaviourTravellerListResponse,
+  BehaviourTravellerListParams,
 } from './types.js';
 import {
   mockOpportunitySummary,
@@ -30,6 +32,7 @@ import {
   mockRevenueRiskSummary,
   mockActionPerformance,
   mockPredictionAccuracy,
+  mockBehaviourTravellers,
 } from './mock-data.js';
 
 export interface MockClientOptions {
@@ -74,6 +77,9 @@ export interface MockClient {
   getBehaviourRevenueRisk(): Promise<ApiResponse<RevenueRiskSummary>>;
   getBehaviourActionPerformance(): Promise<ApiResponse<ActionPerformanceSummary>>;
   getBehaviourPredictionAccuracy(): Promise<ApiResponse<PredictionAccuracySummary>>;
+  getBehaviourTravellers(
+    params?: BehaviourTravellerListParams,
+  ): Promise<ApiResponse<BehaviourTravellerListResponse>>;
 }
 
 export function createMockClient(options: MockClientOptions = {}): MockClient {
@@ -135,6 +141,22 @@ export function createMockClient(options: MockClientOptions = {}): MockClient {
 
     async getBehaviourPredictionAccuracy(): Promise<ApiResponse<PredictionAccuracySummary>> {
       return simulateNetwork(mockPredictionAccuracy, options);
+    },
+
+    async getBehaviourTravellers(
+      params: BehaviourTravellerListParams = {},
+    ): Promise<ApiResponse<BehaviourTravellerListResponse>> {
+      let filtered = [...mockBehaviourTravellers];
+      if (params.archetype) {
+        filtered = filtered.filter((t) => t.archetype === params.archetype);
+      }
+      if (params.fatigueLevel) {
+        filtered = filtered.filter((t) => t.fatigueLevel === params.fatigueLevel);
+      }
+      const offset = params.offset ?? 0;
+      const limit = params.limit ?? 10;
+      const items = filtered.slice(offset, offset + limit);
+      return simulateNetwork({ items, total: filtered.length }, options);
     },
   };
 }
