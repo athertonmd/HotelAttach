@@ -1,0 +1,16 @@
+export {
+  getBehaviourOverviewSummary,
+  getArchetypeDistribution,
+  getFatigueSummary,
+  getRevenueRiskSummary,
+  getActionPerformanceSummary,
+  getPredictionAccuracySummary,
+  type QueryInput,
+  type QueryServiceDeps,
+  type BehaviourOverviewSummary,
+  type ArchetypeDistributionSummary,
+  type FatigueSummary,
+  type RevenueRiskSummary,
+  type ActionPerformanceSummary,
+  type PredictionAccuracySummary,
+} from './behaviour-query-service.js';

@@ -4,3 +4,6 @@ export * from './events/index.js';
 export * from './repositories/index.js';
 export * from './services/index.js';
 export * from './persistence/index.js';
+export * from './projections/index.js';
+export * from './queries/index.js';
+export * from './api/index.js';
