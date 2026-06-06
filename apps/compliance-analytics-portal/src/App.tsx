@@ -6,6 +6,7 @@ import { OpportunitiesPage } from './pages/OpportunitiesPage';
 import { DutyOfCarePage } from './pages/DutyOfCarePage';
 import { EngagementPage } from './pages/EngagementPage';
 import { EscalationsPage } from './pages/EscalationsPage';
+import { BehaviourPage } from './pages/BehaviourPage';
 import type { ReactNode } from 'react';
 
 function GuardedRoute({
@@ -58,6 +59,46 @@ export function App(): React.JSX.Element {
               element={
                 <GuardedRoute path="/analytics/escalations">
                   <EscalationsPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour/archetypes"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour/fatigue"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour/revenue-risk"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour/recommendations"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourPage />
                 </GuardedRoute>
               }
             />

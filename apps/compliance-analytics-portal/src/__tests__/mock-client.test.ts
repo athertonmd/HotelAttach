@@ -155,10 +155,98 @@ describe('Mock API Client', () => {
         client.getDutyOfCareSummary(),
         client.getEngagementSummary(),
         client.getEscalationSummary(),
+        client.getBehaviourOverview(),
+        client.getBehaviourArchetypes(),
+        client.getBehaviourFatigue(),
+        client.getBehaviourRevenueRisk(),
+        client.getBehaviourActionPerformance(),
+        client.getBehaviourPredictionAccuracy(),
       ]);
 
       for (const result of results) {
         expect(result.success).toBe(false);
+      }
+    });
+  });
+
+  describe('getBehaviourOverview', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourOverview();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.totalTravellers).toBeTypeOf('number');
+        expect(result.data.archetypeDistribution).toBeTypeOf('object');
+        expect(result.data.segmentDistribution).toBeTypeOf('object');
+        expect(result.data.averageConfidence).toBeTypeOf('number');
+        expect(result.data.highFatigueCount).toBeTypeOf('number');
+        expect(result.data.significantDriftCount).toBeTypeOf('number');
+      }
+    });
+  });
+
+  describe('getBehaviourArchetypes', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourArchetypes();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.distribution).toBeInstanceOf(Array);
+        expect(result.data.total).toBeTypeOf('number');
+        expect(result.data.distribution.length).toBeGreaterThan(0);
+      }
+    });
+  });
+
+  describe('getBehaviourFatigue', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourFatigue();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.distribution).toBeTypeOf('object');
+        expect(result.data.highCriticalTravellers).toBeInstanceOf(Array);
+        expect(result.data.totalSuppressions).toBeTypeOf('number');
+      }
+    });
+  });
+
+  describe('getBehaviourRevenueRisk', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourRevenueRisk();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.totalRevenueAtRisk).toBeTypeOf('number');
+        expect(result.data.highestRiskTravellers).toBeInstanceOf(Array);
+        expect(result.data.byRiskTier).toBeTypeOf('object');
+      }
+    });
+  });
+
+  describe('getBehaviourActionPerformance', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourActionPerformance();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.actions).toBeInstanceOf(Array);
+        expect(result.data.overallAccuracy).toBeTypeOf('number');
+        expect(result.data.totalRecommendations).toBeTypeOf('number');
+      }
+    });
+  });
+
+  describe('getBehaviourPredictionAccuracy', () => {
+    it('returns expected shape', async () => {
+      const client = createMockClient({ delay: 0 });
+      const result = await client.getBehaviourPredictionAccuracy();
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.overallAccuracy).toBeTypeOf('number');
+        expect(result.data.totalPredictions).toBeTypeOf('number');
+        expect(result.data.correctPredictions).toBeTypeOf('number');
+        expect(result.data.avgDaysDifference).toBeTypeOf('number');
       }
     });
   });

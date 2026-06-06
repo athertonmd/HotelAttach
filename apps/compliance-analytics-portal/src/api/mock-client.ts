@@ -11,6 +11,12 @@ import type {
   DutyOfCareSummary,
   EngagementSummary,
   EscalationSummary,
+  BehaviourOverviewSummary,
+  ArchetypeDistributionSummary,
+  FatigueSummary,
+  RevenueRiskSummary,
+  ActionPerformanceSummary,
+  PredictionAccuracySummary,
 } from './types.js';
 import {
   mockOpportunitySummary,
@@ -18,6 +24,12 @@ import {
   mockDutyOfCareSummary,
   mockEngagementSummary,
   mockEscalationSummary,
+  mockBehaviourOverview,
+  mockArchetypeDistribution,
+  mockFatigueSummary,
+  mockRevenueRiskSummary,
+  mockActionPerformance,
+  mockPredictionAccuracy,
 } from './mock-data.js';
 
 export interface MockClientOptions {
@@ -56,6 +68,12 @@ export interface MockClient {
   getDutyOfCareSummary(): Promise<ApiResponse<DutyOfCareSummary>>;
   getEngagementSummary(): Promise<ApiResponse<EngagementSummary>>;
   getEscalationSummary(): Promise<ApiResponse<EscalationSummary>>;
+  getBehaviourOverview(): Promise<ApiResponse<BehaviourOverviewSummary>>;
+  getBehaviourArchetypes(): Promise<ApiResponse<ArchetypeDistributionSummary>>;
+  getBehaviourFatigue(): Promise<ApiResponse<FatigueSummary>>;
+  getBehaviourRevenueRisk(): Promise<ApiResponse<RevenueRiskSummary>>;
+  getBehaviourActionPerformance(): Promise<ApiResponse<ActionPerformanceSummary>>;
+  getBehaviourPredictionAccuracy(): Promise<ApiResponse<PredictionAccuracySummary>>;
 }
 
 export function createMockClient(options: MockClientOptions = {}): MockClient {
@@ -93,6 +111,30 @@ export function createMockClient(options: MockClientOptions = {}): MockClient {
 
     async getEscalationSummary(): Promise<ApiResponse<EscalationSummary>> {
       return simulateNetwork(mockEscalationSummary, options);
+    },
+
+    async getBehaviourOverview(): Promise<ApiResponse<BehaviourOverviewSummary>> {
+      return simulateNetwork(mockBehaviourOverview, options);
+    },
+
+    async getBehaviourArchetypes(): Promise<ApiResponse<ArchetypeDistributionSummary>> {
+      return simulateNetwork(mockArchetypeDistribution, options);
+    },
+
+    async getBehaviourFatigue(): Promise<ApiResponse<FatigueSummary>> {
+      return simulateNetwork(mockFatigueSummary, options);
+    },
+
+    async getBehaviourRevenueRisk(): Promise<ApiResponse<RevenueRiskSummary>> {
+      return simulateNetwork(mockRevenueRiskSummary, options);
+    },
+
+    async getBehaviourActionPerformance(): Promise<ApiResponse<ActionPerformanceSummary>> {
+      return simulateNetwork(mockActionPerformance, options);
+    },
+
+    async getBehaviourPredictionAccuracy(): Promise<ApiResponse<PredictionAccuracySummary>> {
+      return simulateNetwork(mockPredictionAccuracy, options);
     },
   };
 }

@@ -9,6 +9,7 @@ const navItems = [
   { to: '/analytics/duty-of-care', label: 'Duty of Care', icon: '🛡️' },
   { to: '/analytics/engagement', label: 'Engagement', icon: '💬' },
   { to: '/analytics/escalations', label: 'Escalations', icon: '🚨' },
+  { to: '/analytics/behaviour', label: 'Behaviour Intelligence', icon: '🧠' },
 ];
 
 export function Layout(): React.JSX.Element {

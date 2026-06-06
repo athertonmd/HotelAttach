@@ -105,3 +105,94 @@ export const mockEscalationSummary: EscalationSummary = {
   },
   escalations: generateEscalations(20),
 };
+
+// --- Behaviour Intelligence Mock Data ---
+
+import type {
+  BehaviourOverviewSummary,
+  ArchetypeDistributionSummary,
+  FatigueSummary,
+  RevenueRiskSummary,
+  ActionPerformanceSummary,
+  PredictionAccuracySummary,
+} from './types.js';
+
+export const mockBehaviourOverview: BehaviourOverviewSummary = {
+  totalTravellers: 247,
+  archetypeDistribution: {
+    autopilot: 52,
+    responsive: 68,
+    nudge_needer: 45,
+    procrastinator: 38,
+    reluctant: 22,
+    chaotic: 12,
+    new_traveller: 10,
+  },
+  segmentDistribution: {
+    self_sufficient: 65,
+    reliable_late: 82,
+    needs_prompting: 58,
+    requires_intervention: 30,
+    non_compliant: 12,
+  },
+  averageConfidence: 74,
+  highFatigueCount: 18,
+  significantDriftCount: 9,
+};
+
+export const mockArchetypeDistribution: ArchetypeDistributionSummary = {
+  distribution: [
+    { archetype: 'responsive', count: 68 },
+    { archetype: 'autopilot', count: 52 },
+    { archetype: 'nudge_needer', count: 45 },
+    { archetype: 'procrastinator', count: 38 },
+    { archetype: 'reluctant', count: 22 },
+    { archetype: 'chaotic', count: 12 },
+    { archetype: 'new_traveller', count: 10 },
+  ],
+  total: 247,
+};
+
+export const mockFatigueSummary: FatigueSummary = {
+  distribution: { low: 152, medium: 58, high: 27, critical: 10 },
+  highCriticalTravellers: [
+    { travellerId: 'trav-101', fatigueScore: 92, fatigueLevel: 'critical' },
+    { travellerId: 'trav-045', fatigueScore: 88, fatigueLevel: 'critical' },
+    { travellerId: 'trav-178', fatigueScore: 82, fatigueLevel: 'critical' },
+    { travellerId: 'trav-023', fatigueScore: 76, fatigueLevel: 'high' },
+    { travellerId: 'trav-199', fatigueScore: 72, fatigueLevel: 'high' },
+  ],
+  totalSuppressions: 84,
+};
+
+export const mockRevenueRiskSummary: RevenueRiskSummary = {
+  totalRevenueAtRisk: 45230,
+  highestRiskTravellers: [
+    { travellerId: 'trav-088', revenueAtRisk: 3200, riskTier: 'critical' },
+    { travellerId: 'trav-042', revenueAtRisk: 2800, riskTier: 'critical' },
+    { travellerId: 'trav-156', revenueAtRisk: 2100, riskTier: 'at_risk' },
+    { travellerId: 'trav-073', revenueAtRisk: 1950, riskTier: 'at_risk' },
+    { travellerId: 'trav-201', revenueAtRisk: 1600, riskTier: 'uncertain' },
+  ],
+  byRiskTier: { secure: 85, likely: 72, uncertain: 48, at_risk: 28, critical: 14 },
+};
+
+export const mockActionPerformance: ActionPerformanceSummary = {
+  actions: [
+    { action: 'send_email', totalRecommended: 120, totalCorrect: 84, accuracyRate: 70 },
+    { action: 'send_sms', totalRecommended: 45, totalCorrect: 33, accuracyRate: 73 },
+    { action: 'send_push', totalRecommended: 30, totalCorrect: 19, accuracyRate: 63 },
+    { action: 'wait', totalRecommended: 65, totalCorrect: 52, accuracyRate: 80 },
+    { action: 'do_nothing', totalRecommended: 40, totalCorrect: 35, accuracyRate: 88 },
+    { action: 'escalate', totalRecommended: 18, totalCorrect: 14, accuracyRate: 78 },
+  ],
+  overallAccuracy: 74,
+  totalRecommendations: 318,
+};
+
+export const mockPredictionAccuracy: PredictionAccuracySummary = {
+  overallAccuracy: 74,
+  totalPredictions: 318,
+  correctPredictions: 237,
+  avgDaysDifference: 2.3,
+};

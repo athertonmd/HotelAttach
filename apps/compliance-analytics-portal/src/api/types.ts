@@ -109,3 +109,57 @@ export interface EscalationListItem {
   status: string;
   assignedAgentId: string;
 }
+
+// --- Behaviour Intelligence ---
+
+export interface BehaviourOverviewSummary {
+  totalTravellers: number;
+  archetypeDistribution: Record<string, number>;
+  segmentDistribution: Record<string, number>;
+  averageConfidence: number;
+  highFatigueCount: number;
+  significantDriftCount: number;
+}
+
+export interface ArchetypeDistributionSummary {
+  distribution: { archetype: string; count: number }[];
+  total: number;
+}
+
+export interface FatigueSummary {
+  distribution: Record<string, number>;
+  highCriticalTravellers: {
+    travellerId: string;
+    fatigueScore: number;
+    fatigueLevel: string;
+  }[];
+  totalSuppressions: number;
+}
+
+export interface RevenueRiskSummary {
+  totalRevenueAtRisk: number;
+  highestRiskTravellers: {
+    travellerId: string;
+    revenueAtRisk: number;
+    riskTier: string;
+  }[];
+  byRiskTier: Record<string, number>;
+}
+
+export interface ActionPerformanceSummary {
+  actions: {
+    action: string;
+    totalRecommended: number;
+    totalCorrect: number;
+    accuracyRate: number;
+  }[];
+  overallAccuracy: number;
+  totalRecommendations: number;
+}
+
+export interface PredictionAccuracySummary {
+  overallAccuracy: number;
+  totalPredictions: number;
+  correctPredictions: number;
+  avgDaysDifference: number;
+}
