@@ -19,6 +19,7 @@ import type {
   PredictionAccuracySummary,
   BehaviourTravellerListResponse,
   BehaviourTravellerListParams,
+  BehaviourTimelineResponse,
 } from './types.js';
 import {
   mockOpportunitySummary,
@@ -33,6 +34,7 @@ import {
   mockActionPerformance,
   mockPredictionAccuracy,
   mockBehaviourTravellers,
+  mockBehaviourTimeline,
 } from './mock-data.js';
 
 export interface MockClientOptions {
@@ -80,6 +82,7 @@ export interface MockClient {
   getBehaviourTravellers(
     params?: BehaviourTravellerListParams,
   ): Promise<ApiResponse<BehaviourTravellerListResponse>>;
+  getBehaviourTimeline(): Promise<ApiResponse<BehaviourTimelineResponse>>;
 }
 
 export function createMockClient(options: MockClientOptions = {}): MockClient {
@@ -157,6 +160,10 @@ export function createMockClient(options: MockClientOptions = {}): MockClient {
       const limit = params.limit ?? 10;
       const items = filtered.slice(offset, offset + limit);
       return simulateNetwork({ items, total: filtered.length }, options);
+    },
+
+    async getBehaviourTimeline(): Promise<ApiResponse<BehaviourTimelineResponse>> {
+      return simulateNetwork(mockBehaviourTimeline, options);
     },
   };
 }

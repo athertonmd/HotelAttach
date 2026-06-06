@@ -191,3 +191,33 @@ export interface BehaviourTravellerListParams {
   limit?: number;
   offset?: number;
 }
+
+// --- Behaviour Timeline ---
+
+export interface TimelineEvent {
+  type: 'trip_created' | 'communication_sent' | 'hotel_booked' | 'departure';
+  daysBefore: number;
+  label: string;
+  channel?: string;
+}
+
+export interface TravellerTimelineEntry {
+  travellerId: string;
+  archetype: string;
+  avgLeadTimeDays: number;
+  consistency: number;
+  events: TimelineEvent[];
+}
+
+export interface AggregateTimelineSummary {
+  avgBookingLeadDays: number;
+  avgCommunicationLeadDays: number;
+  communicationsBeforeBooking: number;
+  lateBookerArchetypes: string[];
+  earlyCommPercentage: number;
+}
+
+export interface BehaviourTimelineResponse {
+  aggregate: AggregateTimelineSummary;
+  travellers: TravellerTimelineEntry[];
+}

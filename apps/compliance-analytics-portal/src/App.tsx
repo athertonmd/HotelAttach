@@ -9,6 +9,7 @@ import { EscalationsPage } from './pages/EscalationsPage';
 import { BehaviourPage } from './pages/BehaviourPage';
 import { BehaviourArchetypesPage } from './pages/BehaviourArchetypesPage';
 import { BehaviourFatiguePage } from './pages/BehaviourFatiguePage';
+import { BehaviourTimelinePage } from './pages/BehaviourTimelinePage';
 import type { ReactNode } from 'react';
 
 function GuardedRoute({
@@ -101,6 +102,14 @@ export function App(): React.JSX.Element {
               element={
                 <GuardedRoute path="/analytics/behaviour">
                   <BehaviourPage />
+                </GuardedRoute>
+              }
+            />
+            <Route
+              path="/analytics/behaviour/timeline"
+              element={
+                <GuardedRoute path="/analytics/behaviour">
+                  <BehaviourTimelinePage />
                 </GuardedRoute>
               }
             />

@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { EscalationsPage } from '../pages/EscalationsPage';
-import { createMockClient } from '../api/mock-client';
-import type { MockClient } from '../api/mock-client';
+import { createMockClient, type MockClient } from '../api/mock-client';
+import { createTestMockClient } from './test-mock-client';
 
 function renderPage(client?: MockClient): ReturnType<typeof render> {
   return render(
@@ -83,33 +83,13 @@ describe('EscalationsPage', () => {
   });
 
   it('error state renders', async () => {
-    const errorClient: MockClient = {
-      getOpportunitySummary: async () => ({
-        success: false as const,
-        correlationId: '1',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-      getOpportunityList: async () => ({
-        success: false as const,
-        correlationId: '2',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-      getDutyOfCareSummary: async () => ({
-        success: false as const,
-        correlationId: '3',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-      getEngagementSummary: async () => ({
-        success: false as const,
-        correlationId: '4',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
+    const errorClient = createTestMockClient({
       getEscalationSummary: async () => ({
         success: false as const,
         correlationId: '5',
         error: { code: 'ERR', message: 'Failed to load escalation data' },
       }),
-    };
+    });
 
     renderPage(errorClient);
 
@@ -120,53 +100,7 @@ describe('EscalationsPage', () => {
   });
 
   it('empty state renders when no data', async () => {
-    const emptyClient: MockClient = {
-      getOpportunitySummary: async () => ({
-        success: true as const,
-        correlationId: '1',
-        data: {
-          activeCount: 0,
-          criticalCount: 0,
-          awaitingActionCount: 0,
-          atRiskCount: 0,
-          byPriority: {},
-          byType: {},
-        },
-      }),
-      getOpportunityList: async () => ({
-        success: true as const,
-        correlationId: '2',
-        data: { items: [], total: 0 },
-      }),
-      getDutyOfCareSummary: async () => ({
-        success: true as const,
-        correlationId: '3',
-        data: {
-          totalTrips: 0,
-          resolvedCount: 0,
-          unresolvedCount: 0,
-          visibilityRate: 100,
-          highRiskUnresolved: 0,
-          approachingDeparture: 0,
-          byDestination: {},
-          approachingDepartureList: [],
-        },
-      }),
-      getEngagementSummary: async () => ({
-        success: true as const,
-        correlationId: '4',
-        data: {
-          communicationsSent: 0,
-          responsesReceived: 0,
-          bookingsCreated: 0,
-          responseRate: 0,
-          conversionRate: 0,
-          escalationCount: 0,
-          byChannel: {},
-          byType: {},
-          responsesByType: {},
-        },
-      }),
+    const emptyClient = createTestMockClient({
       getEscalationSummary: async () => ({
         success: true as const,
         correlationId: '5',
@@ -180,7 +114,7 @@ describe('EscalationsPage', () => {
           escalations: [],
         },
       }),
-    };
+    });
 
     renderPage(emptyClient);
 

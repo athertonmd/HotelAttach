@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { OpportunitiesPage } from '../pages/OpportunitiesPage';
-import { createMockClient } from '../api/mock-client';
-import type { MockClient } from '../api/mock-client';
+import { createMockClient, type MockClient } from '../api/mock-client';
+import { createTestMockClient } from './test-mock-client';
 
 function renderPage(client?: MockClient): ReturnType<typeof render> {
   return render(
@@ -106,7 +106,7 @@ describe('OpportunitiesPage', () => {
   });
 
   it('error state renders', async () => {
-    const errorClient: MockClient = {
+    const errorClient = createTestMockClient({
       getOpportunitySummary: async () => ({
         success: false as const,
         correlationId: '123',
@@ -117,22 +117,7 @@ describe('OpportunitiesPage', () => {
         correlationId: '456',
         error: { code: 'ERR', message: 'Failed to load opportunities' },
       }),
-      getDutyOfCareSummary: async () => ({
-        success: false as const,
-        correlationId: '789',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-      getEngagementSummary: async () => ({
-        success: false as const,
-        correlationId: '012',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-      getEscalationSummary: async () => ({
-        success: false as const,
-        correlationId: '345',
-        error: { code: 'ERR', message: 'Failed' },
-      }),
-    };
+    });
 
     renderPage(errorClient);
 

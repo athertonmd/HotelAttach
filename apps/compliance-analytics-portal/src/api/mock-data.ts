@@ -231,3 +231,63 @@ export const mockBehaviourTravellers: BehaviourTravellerRow[] = Array.from(
     recommendedAction: actions[i % actions.length] as string,
   }),
 );
+
+// --- Behaviour Timeline Mock Data ---
+
+import type {
+  BehaviourTimelineResponse,
+  TravellerTimelineEntry,
+  AggregateTimelineSummary,
+} from './types.js';
+
+const timelineArchetypes = [
+  'autopilot',
+  'procrastinator',
+  'responsive',
+  'nudge_needer',
+  'reluctant',
+  'chaotic',
+];
+
+function generateTimelineEvents(archetype: string): TravellerTimelineEntry['events'] {
+  const leadDays = archetype === 'procrastinator' ? 2 : archetype === 'autopilot' ? 14 : 7;
+  return [
+    { type: 'trip_created', daysBefore: 30, label: 'Trip created' },
+    {
+      type: 'communication_sent',
+      daysBefore: leadDays + 5,
+      label: 'First email',
+      channel: 'email',
+    },
+    { type: 'communication_sent', daysBefore: leadDays + 2, label: 'Reminder SMS', channel: 'sms' },
+    { type: 'hotel_booked', daysBefore: leadDays, label: 'Hotel booked' },
+    { type: 'departure', daysBefore: 0, label: 'Departure' },
+  ];
+}
+
+export const mockTimelineTravellers: TravellerTimelineEntry[] = Array.from(
+  { length: 15 },
+  (_, i) => {
+    const arch = timelineArchetypes[i % timelineArchetypes.length] as string;
+    return {
+      travellerId: `trav-${String(i + 1).padStart(3, '0')}`,
+      archetype: arch,
+      avgLeadTimeDays: arch === 'procrastinator' ? 2 : arch === 'autopilot' ? 14 : 7,
+      consistency: 0.3 + Math.random() * 0.6,
+      events: generateTimelineEvents(arch),
+    };
+  },
+);
+
+export const mockAggregateTimeline: AggregateTimelineSummary = {
+  avgBookingLeadDays: 7.2,
+  avgCommunicationLeadDays: 12.4,
+  communicationsBeforeBooking: 1.8,
+  lateBookerArchetypes: ['procrastinator', 'chaotic'],
+  earlyCommPercentage: 34,
+};
+
+export const mockBehaviourTimeline: BehaviourTimelineResponse = {
+  aggregate: mockAggregateTimeline,
+  travellers: mockTimelineTravellers,
+};
