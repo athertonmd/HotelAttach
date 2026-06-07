@@ -61,9 +61,9 @@ export function HotelAttachmentPage({ client = defaultClient }: Props): React.JS
     : [];
   const belowTargetCount = sortedCorporates.filter((c) => c.gap > 0).length;
 
-  const lastCurvePoint = curve ? curve.curve[curve.curve.length - 1] : undefined;
-  const curveGainFinal7 = lastCurvePoint
-    ? lastCurvePoint.rate - (curve.curve.find((p) => p.daysBefore === 7)?.rate ?? 0)
+  const curveGainFinal7 = curve
+    ? (curve.curve[curve.curve.length - 1]?.rate ?? 0) -
+      (curve.curve.find((p) => p.daysBefore === 7)?.rate ?? 0)
     : 0;
 
   return (
