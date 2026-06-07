@@ -8,7 +8,7 @@
 // Example: echo -n "hci-demo:ManticPoint2026!" | base64
 //          produces: aGNpLWRlbW86TWFudGljUG9pbnQyMDI2IQ==
 
-var CREDENTIALS = 'aGNpLWRlbW86TWFudGljUG9pbnQyMDI2IQ==';
+var CREDENTIALS = 'aaGNpLXJldmlldzpKV2V2RmNqZE1JMkJtRjFw';
 
 function handler(event) {
   var request = event.request;
