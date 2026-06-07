@@ -1,0 +1,65 @@
+{
+  "CallerReference": "hci-demo-portal-2026-06",
+  "Comment": "HCI Compliance Analytics Portal — Mock Demo",
+  "Enabled": true,
+  "DefaultRootObject": "index.html",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "S3-hci-demo-portal",
+        "DomainName": "BUCKET_NAME.s3.eu-west-2.amazonaws.com",
+        "OriginAccessControlId": "OAC_ID_HERE",
+        "S3OriginConfig": {
+          "OriginAccessIdentity": ""
+        }
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "S3-hci-demo-portal",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {
+      "Quantity": 2,
+      "Items": ["GET", "HEAD"]
+    },
+    "CachedMethods": {
+      "Quantity": 2,
+      "Items": ["GET", "HEAD"]
+    },
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+    "Compress": true,
+    "FunctionAssociations": {
+      "Quantity": 1,
+      "Items": [
+        {
+          "EventType": "viewer-request",
+          "FunctionARN": "BASIC_AUTH_FUNCTION_ARN_HERE"
+        }
+      ]
+    }
+  },
+  "CustomErrorResponses": {
+    "Quantity": 2,
+    "Items": [
+      {
+        "ErrorCode": 403,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      },
+      {
+        "ErrorCode": 404,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 10
+      }
+    ]
+  },
+  "ViewerCertificate": {
+    "CloudFrontDefaultCertificate": true,
+    "MinimumProtocolVersion": "TLSv1.2_2021"
+  },
+  "PriceClass": "PriceClass_100",
+  "HttpVersion": "http2and3"
+}
