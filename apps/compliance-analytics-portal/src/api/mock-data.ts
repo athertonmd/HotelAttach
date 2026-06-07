@@ -291,3 +291,91 @@ export const mockBehaviourTimeline: BehaviourTimelineResponse = {
   aggregate: mockAggregateTimeline,
   travellers: mockTimelineTravellers,
 };
+
+// --- Hotel Attachment Analytics Mock Data ---
+
+import type {
+  HotelAttachmentSummary,
+  HotelAttachmentCurveResponse,
+  HotelAttachmentCorporatesResponse,
+  HotelAttachmentDelayResponse,
+} from './types.js';
+
+export const mockHotelAttachmentSummary: HotelAttachmentSummary = {
+  currentRate: 78,
+  targetRate: 85,
+  attachmentGap: 7,
+  pendingAssessmentCount: 23,
+  avgAttachmentDelayDays: 4.2,
+  estimatedRevenueImpact: 14400,
+};
+
+export const mockHotelAttachmentCurve: HotelAttachmentCurveResponse = {
+  curve: [
+    { daysBefore: 30, label: '30 days', rate: 12 },
+    { daysBefore: 20, label: '20 days', rate: 28 },
+    { daysBefore: 14, label: '14 days', rate: 42 },
+    { daysBefore: 10, label: '10 days', rate: 55 },
+    { daysBefore: 7, label: '7 days', rate: 64 },
+    { daysBefore: 5, label: '5 days', rate: 70 },
+    { daysBefore: 3, label: '3 days', rate: 74 },
+    { daysBefore: 1, label: '1 day', rate: 77 },
+    { daysBefore: 0, label: 'Departure', rate: 78 },
+  ],
+};
+
+export const mockHotelAttachmentCorporates: HotelAttachmentCorporatesResponse = {
+  corporates: [
+    {
+      corporateId: 'corp-001',
+      corporateName: 'Acme Corp',
+      attachmentRate: 92,
+      target: 85,
+      gap: -7,
+      trend: 'improving',
+    },
+    {
+      corporateId: 'corp-002',
+      corporateName: 'Widget Industries',
+      attachmentRate: 84,
+      target: 85,
+      gap: 1,
+      trend: 'stable',
+    },
+    {
+      corporateId: 'corp-003',
+      corporateName: 'TechStart Ltd',
+      attachmentRate: 76,
+      target: 85,
+      gap: 9,
+      trend: 'declining',
+    },
+    {
+      corporateId: 'corp-004',
+      corporateName: 'Global Finance',
+      attachmentRate: 71,
+      target: 85,
+      gap: 14,
+      trend: 'declining',
+    },
+    {
+      corporateId: 'corp-005',
+      corporateName: 'MegaTravel Inc',
+      attachmentRate: 88,
+      target: 85,
+      gap: -3,
+      trend: 'improving',
+    },
+  ],
+};
+
+export const mockHotelAttachmentDelay: HotelAttachmentDelayResponse = {
+  distribution: [
+    { band: '0–24 hours', percentage: 35, count: 112 },
+    { band: '24–48 hours', percentage: 25, count: 80 },
+    { band: '48–72 hours', percentage: 18, count: 58 },
+    { band: '3–7 days', percentage: 15, count: 48 },
+    { band: '7+ days', percentage: 7, count: 22 },
+  ],
+  averageDays: 4.2,
+};

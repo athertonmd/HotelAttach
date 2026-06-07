@@ -20,6 +20,10 @@ import type {
   BehaviourTravellerListResponse,
   BehaviourTravellerListParams,
   BehaviourTimelineResponse,
+  HotelAttachmentSummary,
+  HotelAttachmentCurveResponse,
+  HotelAttachmentCorporatesResponse,
+  HotelAttachmentDelayResponse,
 } from './types.js';
 import {
   mockOpportunitySummary,
@@ -35,6 +39,10 @@ import {
   mockPredictionAccuracy,
   mockBehaviourTravellers,
   mockBehaviourTimeline,
+  mockHotelAttachmentSummary,
+  mockHotelAttachmentCurve,
+  mockHotelAttachmentCorporates,
+  mockHotelAttachmentDelay,
 } from './mock-data.js';
 
 export interface MockClientOptions {
@@ -83,6 +91,10 @@ export interface MockClient {
     params?: BehaviourTravellerListParams,
   ): Promise<ApiResponse<BehaviourTravellerListResponse>>;
   getBehaviourTimeline(): Promise<ApiResponse<BehaviourTimelineResponse>>;
+  getHotelAttachmentSummary(): Promise<ApiResponse<HotelAttachmentSummary>>;
+  getHotelAttachmentCurve(): Promise<ApiResponse<HotelAttachmentCurveResponse>>;
+  getHotelAttachmentCorporates(): Promise<ApiResponse<HotelAttachmentCorporatesResponse>>;
+  getHotelAttachmentDelay(): Promise<ApiResponse<HotelAttachmentDelayResponse>>;
 }
 
 export function createMockClient(options: MockClientOptions = {}): MockClient {
@@ -164,6 +176,22 @@ export function createMockClient(options: MockClientOptions = {}): MockClient {
 
     async getBehaviourTimeline(): Promise<ApiResponse<BehaviourTimelineResponse>> {
       return simulateNetwork(mockBehaviourTimeline, options);
+    },
+
+    async getHotelAttachmentSummary(): Promise<ApiResponse<HotelAttachmentSummary>> {
+      return simulateNetwork(mockHotelAttachmentSummary, options);
+    },
+
+    async getHotelAttachmentCurve(): Promise<ApiResponse<HotelAttachmentCurveResponse>> {
+      return simulateNetwork(mockHotelAttachmentCurve, options);
+    },
+
+    async getHotelAttachmentCorporates(): Promise<ApiResponse<HotelAttachmentCorporatesResponse>> {
+      return simulateNetwork(mockHotelAttachmentCorporates, options);
+    },
+
+    async getHotelAttachmentDelay(): Promise<ApiResponse<HotelAttachmentDelayResponse>> {
+      return simulateNetwork(mockHotelAttachmentDelay, options);
     },
   };
 }

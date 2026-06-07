@@ -221,3 +221,48 @@ export interface BehaviourTimelineResponse {
   aggregate: AggregateTimelineSummary;
   travellers: TravellerTimelineEntry[];
 }
+
+// --- Hotel Attachment Analytics ---
+
+export interface HotelAttachmentSummary {
+  currentRate: number;
+  targetRate: number;
+  attachmentGap: number;
+  pendingAssessmentCount: number;
+  avgAttachmentDelayDays: number;
+  estimatedRevenueImpact: number;
+}
+
+export interface AttachmentCurvePoint {
+  daysBefore: number;
+  label: string;
+  rate: number;
+}
+
+export interface CorporateAttachmentEntry {
+  corporateId: string;
+  corporateName: string;
+  attachmentRate: number;
+  target: number;
+  gap: number;
+  trend: 'improving' | 'declining' | 'stable';
+}
+
+export interface AttachmentDelayBand {
+  band: string;
+  percentage: number;
+  count: number;
+}
+
+export interface HotelAttachmentCurveResponse {
+  curve: AttachmentCurvePoint[];
+}
+
+export interface HotelAttachmentCorporatesResponse {
+  corporates: CorporateAttachmentEntry[];
+}
+
+export interface HotelAttachmentDelayResponse {
+  distribution: AttachmentDelayBand[];
+  averageDays: number;
+}

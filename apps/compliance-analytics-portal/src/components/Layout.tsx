@@ -5,6 +5,7 @@ import { TenantSelector } from './TenantSelector';
 import { DemoBanner } from './DemoBanner';
 
 const navItems = [
+  { to: '/analytics/hotel-attachment', label: 'Hotel Attachment', icon: '🏨' },
   { to: '/analytics/opportunities', label: 'Opportunities', icon: '📊' },
   { to: '/analytics/duty-of-care', label: 'Duty of Care', icon: '🛡️' },
   { to: '/analytics/engagement', label: 'Engagement', icon: '💬' },
